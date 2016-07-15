@@ -1,20 +1,22 @@
 
 body {
-    background: blue url("sunrise.jpg");
+    background-image: url(../../portfolioAssets/background-min.jpeg);
     background-size: cover;
 }
-
 
 p {
     margin: auto;
 }
 
+body {
+    width: 100%;
+    height: 100%;
+}
+
 .mainBox {
-    height: 400px;
-    width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
+    height: 700px;
+    width: 900px;
+    margin: 30px auto 0 auto;
     border-radius: 20px;
 }
 
@@ -24,14 +26,14 @@ p {
     width: 600px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    font-size:20px
+    font-size:1.6em;
 }
 
 .titleTwo {
-    text-align: center;
+    display: flex;
     height: 125px;
     width: 600px;
-    font-size: 1.7em;
+    font-size: 2.5em;
 }
 
 .titleOne, .titleTwo {
@@ -39,13 +41,14 @@ p {
     font-family: 'Noto Sans', sans-serif;
     text-shadow: 1px 1px 10px black;
     font-weight: 900;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
 .temperature {
-    display: flex;
-    height: 200px;
-    width: 200px;
+    height: 240px;
+    width: 400px;
     color: white;
     margin-right: auto;
     margin-left: auto;
@@ -55,22 +58,23 @@ p {
     text-shadow: 1px 1px 10px black;
 }
 
-.tempPic {
-    float: left;
-    width: 100px;
-    height: 100px;
-}
 
 .tempNumber {
-    float: right;
-    width: 100px;
+    width: 100%;
     height: 100px;
+    display: flex;
+}
+
+.description {
+    width: 100%;
+    height: 100px;
+    display: flex;
 }
 
 .moreInfo {
     display: flex;
     height: 100px;
-    width: 600px;
+    width: 900px;
     color: #173705;
     font-family: 'Noto Sans', sans-serif;
     font-weight: 700;
@@ -79,7 +83,7 @@ p {
 
 .location, .sky, .wind {
     background-color: silver;
-    opacity: 0.8;
+    opacity: 0.6;
     border-radius: 20px;
     margin-right: 10px;
     box-shadow: 5px 5px 10px black;
@@ -88,20 +92,20 @@ p {
 .location {
     display: flex;
     height: 100px;
-    width:  225px;
+    width:  300px;
     float: left;
 }
 
 .sky {
     display: flex;
     height: 100px;
-    width:  150px;
+    width:  300px;
     float: left;
 }
 
 .wind {
     display: flex;
     height: 100px;
-    width:  225px;
+    width:  300px;
     float: right;
 }
