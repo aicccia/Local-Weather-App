@@ -7,8 +7,10 @@ $(document).ready(function() {
     navigator.geolocation.getCurrentPosition(getWeatherData);
 
     function getWeatherData(position) {
-        var lat = Math.round(position.coords.latitude);
-        var log = Math.round(position.coords.longitude);
+        var lat = position.coords.latitude;
+        var log = position.coords.longitude;
+
+
 
         var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + log + "&appid=4bd0296ac3468ba55671920cabb0f745";
 

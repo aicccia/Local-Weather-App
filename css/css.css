@@ -1,7 +1,6 @@
 
 body {
-    background-image: url(../../portfolioAssets/background-min.jpeg);
-    background-size: cover;
+    background-color: blue;
 }
 
 p {
