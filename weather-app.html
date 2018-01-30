@@ -4,27 +4,47 @@
 	<meta charset="utf-8">
 	<title>J. Nicholas Engleman's Weather App</title>
 	<link rel="stylesheet" href="css/cssreset.css">
-	<link rel="stylesheet" href="css/weather.css">
+	<link rel="stylesheet" href="css/styles.css">
 	<link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
 </head>
 <body>
-<div class="mainBox">
-	<h1>Local Weather App</h1>
-	<div class="shortDes">
-		<div class="temperature"><p>78 F</p></div>
-		<div class="description"><p>Sunny</p></div>
-	</div>
-	<form id="zipcode">
-		<label> Zipcode:
-			<input type="text" id="zip">
+<header>
+	<form class="zipcode">
+		<label>
+			<input type="text" id="zip" maxlength="5" placeholder="zipcode">
 		</label>
 	</form>
-	<div class="moreInfo">
-		<div class="location"><p>Atlanta, Georgia</p></div>
-		<div class="sky"><p>sky is clear</p></div>
+</header>
+
+<main>
+	<div class="location"><p>Atlanta, Georgia</p></div>
+
+	<div class="row1">
+		<div class="weatherPic" id="weatherIcon">Sunny</div>
+		<div class="temperature"><p>78 F</p></div>
+		<div class="tempSystem">
+			<div class="temp" id="fahrenheit">F</div>
+			<div class="temp" id="celsius">C</div>
+		</div>
+	</div>
+	<div class="description"><p>Sunny</p></div>
+	<div class="updated">updated as of 3:07 PM</div>
+	<div class="bottomRow">
+		<div class="humidity"><p>Humidity</p></div>
 		<div class="wind"><p>SW 7.67 knots</p></div>
+		<div class="visibility"><p>SW 7.67 knots</p></div>
+	</div>
+</main>
+
+<div class="forcast">
+	<div class="forcastDay">
+
 	</div>
 </div>
+
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="js/weather.js"></script>
 </body>
