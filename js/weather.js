@@ -34,6 +34,7 @@ $(document).ready(function () {
 //********************************************
 function getCurrentLatLog(position) {
 	getAndUpdateCurrentWeather(position.coords.latitude, position.coords.longitude);
+	getAndUpdateForecastWeather(position.coords.latitude, position.coords.longitude);
 }
 
 function getAndUpdateCurrentWeather(lat, log) {
@@ -71,6 +72,11 @@ function getAndUpdateCurrentWeather(lat, log) {
 		$(".visibility").css("opacity",0.2).empty().append(`<p>Visibility is ${visibility} miles.</p>`).animate({opacity: 1}, 1000);
 
 	});
+}
+
+
+function getAndUpdateForecastWeather(lat, log) {
+	$(".date").css("opacity",0.2).empty().append(`<p>${updateForecastDates(1)[0]} ${updateForcastDates(1)[1]}</p>`).animate({opacity: 1}, 1000);
 }
 
 
@@ -145,6 +151,34 @@ function getWeatherIcon(cloudCoverage) {
 		}
 	}
 }
+
+function getDayOfWeek(day) {
+	switch(day)  {
+		case 1:
+			return "Mon";
+		case 2:
+			return "Tue";
+		case 3:
+			return "Wed";
+		case 4:
+			return "Thu";
+		case 5:
+			return "Fri";
+		case 6:
+			return "Sat";
+		case 7:
+			return"Sun";
+	}
+}
+
+function updateForecastDates(increment) {
+	let timeNow = new Date(Date.now());
+	let datePlus = new Date(timeNow.setDate(timeNow.getDate() + increment));
+	let datePlusDayOfWeek = getDayOfWeek(datePlus.getDay());
+
+	return [datePlusDayOfWeek, datePlus.getDate()];
+}
+
 
 
 
