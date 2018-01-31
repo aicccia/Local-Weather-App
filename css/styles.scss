@@ -1,5 +1,5 @@
 body {
-  background: hsl(219, 79%, 70%);
+  background: hsl(219, 79%, 85%);
   font-size: 20px;
   width: 100%;
   height: 100%;
@@ -16,7 +16,7 @@ header {
 	margin-top: 8px;
 	input {
 	  height: 15px;
-	  background-color: hsl(219, 79%, 88%);
+	  background-color: hsl(219, 79%, 85%);
 	  border: none;
 	  border-radius: 3px;
 	  color: black;
@@ -36,6 +36,15 @@ main {
   height: 30%;
   margin: auto;
   width: 40%;
+}
+
+footer {
+  border-top: 1px solid black;
+  bottom: 0;
+  height: 40px;
+  position: fixed;
+  width: 100%;
+
 }
 
 .location {
@@ -58,9 +67,10 @@ main {
 
 .tempSystem {
   display: flex;
-  flex-direction: column;
   justify-content: space-around;
-  height: 60px;
+  float: left;
+  margin: 10px 0 0 30px;
+  width: 90px;
   .temp {
 	border: 1px solid transparent;
 	display: flex;
@@ -69,7 +79,7 @@ main {
 	font-size: 1.2rem;
 	height: 26px;
 	text-align: center;
-	width: 26px;
+	width: 40px;
 	&:hover {
 	  border: 1px solid white;
 	  background-color: hsl(219, 79%, 80%);
@@ -94,4 +104,31 @@ main {
   display: flex;
   justify-content: space-evenly;
 }
+
+.forcastContainer {
+  bottom: 60px;
+  position: fixed;
+  width: 100%;
+  .forcastGroup {
+	display: flex;
+	justify-content: space-evenly;
+	margin: 0 auto 0 auto;
+	width: 80%;
+	.forcastDay {
+	  border: 1px solid white;
+	  align-items: center;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: space-evenly;
+	  padding: 20px;
+	  width: 15%;
+	  .forcastItem {
+		margin-bottom: 7px;
+	  }
+	}
+
+  }
+}
+
+
 

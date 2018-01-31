@@ -9,6 +9,10 @@
 </head>
 <body>
 <header>
+	<div class="tempSystem">
+		<div class="temp" id="fahrenheit">F</div>
+		<div class="temp" id="celsius">C</div>
+	</div>
 	<form class="zipcode">
 		<label>
 			<input type="text" id="zip" maxlength="5" placeholder="zipcode">
@@ -20,14 +24,10 @@
 	<div class="location"><p>Atlanta, Georgia</p></div>
 
 	<div class="row1">
-		<div class="weatherPic" id="weatherIcon">Sunny</div>
 		<div class="temperature"><p>78 F</p></div>
-		<div class="tempSystem">
-			<div class="temp" id="fahrenheit">F</div>
-			<div class="temp" id="celsius">C</div>
-		</div>
 	</div>
 	<div class="description"><p>Sunny</p></div>
+	<div class="weatherPic" id="weatherIcon">Sunny</div>
 	<div class="updated">updated as of 3:07 PM</div>
 	<div class="bottomRow">
 		<div class="humidity"><p>Humidity</p></div>
@@ -36,14 +36,20 @@
 	</div>
 </main>
 
-<div class="forcast">
-	<div class="forcastDay">
-
+<div class="forcastContainer">
+	<div class="forcastGroup">
+		<div class="forcastDay">
+			<div class="date forcastItem">date</div>
+			<div class="iconForcast forcastItem">icon</div>
+			<div class="tempForcast forcastItem">high temp:</div>
+			<div class="tempForcast forcastItem">Low temp:</div>
+			<div class="descriptionForcast forcastItem">description</div>
+		</div>
 	</div>
 </div>
-
-
-
+<footer>
+	<p>weather icons curtesy of <a href="https://www.amcharts.com/free-animated-svg-weather-icons/">Amcharts</a></p>
+</footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="js/weather.js"></script>
