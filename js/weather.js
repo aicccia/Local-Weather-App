@@ -37,8 +37,8 @@ function getCurrentLatLog(position) {
 	getAndUpdateForecastWeather(position.coords.latitude, position.coords.longitude);
 }
 
-function getAndUpdateCurrentWeather(lat, log) {
-	const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${log}&appid=4bd0296ac3468ba55671920cabb0f745`;
+function getAndUpdateCurrentWeather(lat, lon) {
+	const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4bd0296ac3468ba55671920cabb0f745`;
 
 	$.getJSON(url, function (weather) {
 
@@ -62,21 +62,34 @@ function getAndUpdateCurrentWeather(lat, log) {
 		const windspeed = ((weather.wind.speed * 3600) * 3.28 / 5280).toFixed(0);
 		const visibility = Math.round(weather.visibility*0.000621371);
 
-		$(".temperature").empty().append(`<p> ${tempConverted} F</p>`);
-		$(".description").empty().append(`<p> ${des} </p>`);
+		$("#currentTemperature").empty().append(`<p> ${tempConverted}&#176</p>`);
+		$("#currentDescription").empty().append(`<p> ${des} </p>`);
 		$("#weatherIcon").empty().append(`<img src='icons/${getWeatherIcon(cloudCoverage)}'>`);
-		$(".updated").css("opacity",0.2).empty().append(`<p>updated as of ${time}</p>`).animate({opacity: 1}, 1000);
-		$(".location").css("opacity",0.2).empty().append(`<p> ${city}, ${country} </p>`).animate({opacity: 1}, 1000);
-		$(".humidity").css("opacity",0.2).empty().append(`<p>Humidity is ${hum}%.</p>`).animate({opacity: 1}, 1000);
-		$(".wind").css("opacity",0.2).empty().append(`<p>Wind is ${windDirection} at ${windspeed} mph.</p>`).animate({opacity: 1}, 1000);
-		$(".visibility").css("opacity",0.2).empty().append(`<p>Visibility is ${visibility} miles.</p>`).animate({opacity: 1}, 1000);
+		$("#updated").css("opacity",0.2).empty().append(`<p>updated as of ${time}</p>`).animate({opacity: 1}, 1000);
+		$("#location").css("opacity",0.2).empty().append(`<p> ${city}, ${country} </p>`).animate({opacity: 1}, 1000);
+		$("#currentHumidity").css("opacity",0.2).empty().append(`<p>Humidity is ${hum}%.</p>`).animate({opacity: 1}, 1000);
+		$("#currentWind").css("opacity",0.2).empty().append(`<p>Wind is ${windDirection} at ${windspeed} mph.</p>`).animate({opacity: 1}, 1000);
+		$("#currentVisibility").css("opacity",0.2).empty().append(`<p>Visibility is ${visibility} miles.</p>`).animate({opacity: 1}, 1000);
 
 	});
 }
 
 
-function getAndUpdateForecastWeather(lat, log) {
-	$(".date").css("opacity",0.2).empty().append(`<p>${updateForecastDates(1)[0]} ${updateForcastDates(1)[1]}</p>`).animate({opacity: 1}, 1000);
+function getAndUpdateForecastWeather(lat, lon) {
+	const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=4bd0296ac3468ba55671920cabb0f745`;
+
+	$.getJSON(url, function (weatherForecast) {
+		console.log(weatherForecast);
+
+		$("#iconForecast").css("opacity",0.2).empty().append(`<img src='icons/${getWeatherIcon(getAverageCloudCoverage(weatherForecast, 0, 7))}'>`).animate({opacity: 1}, 1000);
+		$("#maxTemp").css("opacity",0.2).empty().append(`<p>${getHighTemp(weatherForecast,0,7,"F")}</p>`).animate({opacity: 1}, 1000);
+		$("#minTemp").css("opacity",0.2).empty().append(`<p>${getLowTemp(weatherForecast,0,7, "F")}</p>`).animate({opacity: 1}, 1000);
+		$("#description").css("opacity",0.2).empty().append(`<p>${createDescription(weatherForecast,0,7)}</p>`).animate({opacity: 1}, 1000);
+		$("#windForecast").css("opacity",0.2).empty().append(`<img src="icons/wi-strong-wind.svg"> <p>${getAverageWindSpeed(weatherForecast,0,7, "F")} mph</p>`).animate({opacity: 1}, 1000);
+		$("#rainForecast").css("opacity",0.2).empty().append(`<img src="icons/wi-raindrops.svg"><p>${getAverageRain(weatherForecast,0,7)}%</p>`).animate({opacity: 1}, 1000);
+	});
+
+	$(".date").css("opacity",0.2).empty().append(`<p>${updateForecastDates(1)[0]} ${updateForecastDates(1)[1]}</p>`).animate({opacity: 1}, 1000);
 }
 
 
@@ -111,11 +124,12 @@ function findWindDirection(degrees) {
 }
 
 function getWeatherIcon(cloudCoverage) {
+//	let cloudCoverage = getAverageCloudCoverage(weatherData, startPeriod, endPeriod);
 
 	let timeNow = new Date(Date.now());
 	//	let timeOfSunrise = new Date(timeNow).setHours(0, 0, 0, 0) + new Date(apiSunriseTime).setDate(1) - 18000000;
 	let timeOfSunrise = new Date(timeNow).setHours(6, 30, 0, 0);
-	let timeOfSunset = new Date(timeNow).setHours(20, 0, 0, 0);
+	let timeOfSunset = new Date(timeNow).setHours(19, 30, 0, 0);
 
 	if (timeOfSunrise < timeNow && timeNow < timeOfSunset) {
 		if (cloudCoverage < 10) {
@@ -179,6 +193,88 @@ function updateForecastDates(increment) {
 	return [datePlusDayOfWeek, datePlus.getDate()];
 }
 
+function getHighTemp(weatherData, startPeriod, endPeriod, weatherSystem) {
+	let maxTemp = 0;
+	for (let e = startPeriod; e < endPeriod + 1; e++) {
+		if (maxTemp < weatherData.list[e].main.temp_max) {
+			maxTemp = weatherData.list[e].main.temp_max;
+		}
+	}
+	if (weatherSystem === "F") {
+		return `${Math.round(maxTemp * (9/5) - 459.67)}&#176`;
+	}
 
+}
+
+function getLowTemp(weatherData, startPeriod, endPeriod, weatherSystem) {
+	let minTemp = 1000;
+	for (let e = startPeriod; e < endPeriod + 1; e++) {
+		if (minTemp > weatherData.list[e].main.temp_min) {
+			minTemp = weatherData.list[e].main.temp_min;
+		}
+	}
+	if (weatherSystem === "F") {
+		return `${Math.round(minTemp * (9/5) - 459.67)}&#176`;
+	}
+}
+
+function getAverageCloudCoverage(weatherData, startPeriod, endPeriod) {
+	let totalCloudCoverage = 0;
+	for (let e = startPeriod; e < endPeriod + 1; e++) {
+		totalCloudCoverage = totalCloudCoverage + weatherData.list[e].clouds.all;
+	}
+	return totalCloudCoverage / (endPeriod - startPeriod + 1);
+}
+
+function getAverageWindSpeed(weatherData, startPeriod, endPeriod, weatherSystem) {
+	let averageWindSpeed = 0;
+	for (let e = startPeriod; e < endPeriod + 1; e++) {
+		averageWindSpeed =  averageWindSpeed + weatherData.list[e].wind.speed;
+	}
+	if (weatherSystem === "F") {
+		averageWindSpeed = Math.round(((averageWindSpeed / (endPeriod - startPeriod + 1) * 3.28) * 3600) / 5280);
+	}
+	return averageWindSpeed;
+}
+
+function getAverageRain(weatherData, startPeriod, endPeriod) {
+	let averageRain = 0;
+	for (let e = startPeriod; e < endPeriod + 1; e++) {
+		if (weatherData.list[e].rain) {
+			averageRain++;
+		}
+	}
+	return Math.round(((averageRain / (endPeriod - startPeriod + 1))*0.7)*100);
+}
+
+function createDescription(weatherData, startPeriod, endPeriod) {
+	let clouds, rain;
+	let averageCloudCoverage =  getAverageCloudCoverage(weatherData, startPeriod, endPeriod);
+	let averageRain = getAverageRain(weatherData, startPeriod, endPeriod);
+
+	if (averageCloudCoverage < 10) {
+		clouds = "is clear";
+	} else if(averageCloudCoverage < 30) {
+		clouds =  "there are some clouds";
+	} else if (averageCloudCoverage < 60) {
+		clouds = "is cloudy";
+	} else {
+		clouds = "is overcast";
+	}
+
+	if (averageRain === 0) {
+		rain = "with no rain";
+	} else if(averageRain < 25) {
+		rain =  "with a small chance of rain";
+	} else if (averageRain < 50) {
+		rain = "with probably some rain";
+	} else if(averageRain < 75) {
+		rain = "almost certainly some rain";
+	} else {
+		rain = "with a lot of rain";
+	}
+
+	return `today ${clouds} ${rain}`;
+}
 
 

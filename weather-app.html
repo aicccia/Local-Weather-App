@@ -21,29 +21,36 @@
 </header>
 
 <main>
-	<div class="location"><p>Atlanta, Georgia</p></div>
+	<div class="location" id="location"><p>Atlanta, Georgia</p></div>
 
 	<div class="row1">
-		<div class="temperature"><p>78 F</p></div>
+		<div class="temperature" id="currentTemperature"><p>78 F</p></div>
 	</div>
-	<div class="description"><p>Sunny</p></div>
+	<div class="description" id="currentDescription"><p>Sunny</p></div>
 	<div class="weatherPic" id="weatherIcon">Sunny</div>
-	<div class="updated">updated as of 3:07 PM</div>
+	<div class="updated" id="updated">updated as of 3:07 PM</div>
 	<div class="bottomRow">
-		<div class="humidity"><p>Humidity</p></div>
-		<div class="wind"><p>SW 7.67 knots</p></div>
-		<div class="visibility"><p>SW 7.67 knots</p></div>
+		<div class="humidity" id="currentHumidity"><p>Humidity</p></div>
+		<div class="wind" id="currentWind"><p>SW 7.67 knots</p></div>
+		<div class="visibility" id="currentVisibility"><p>SW 7.67 knots</p></div>
 	</div>
 </main>
 
-<div class="forcastContainer">
-	<div class="forcastGroup">
-		<div class="forcastDay">
-			<div class="date forcastItem">date</div>
-			<div class="iconForcast forcastItem">icon</div>
-			<div class="tempForcast forcastItem">high temp:</div>
-			<div class="tempForcast forcastItem">Low temp:</div>
-			<div class="descriptionForcast forcastItem">description</div>
+<div class="forecastContainer">
+	<div class="forecastGroup">
+		<div class="forecastDay">
+			<div class="date forecastItem">date</div>
+			<div class="iconForecast forecastItem" id="iconForecast">icon</div>
+			<div class="tempRow">
+				<div class="tempForecast forecastItem" id="minTemp">Low temp:</div>
+				<p>-</p>
+				<div class="tempForecast forecastItem" id="maxTemp">high temp:</div>
+			</div>
+			<div class="descriptionForecast forecastItem" id="description">description</div>
+			<div class="miscWeather forecastItem">
+				<div class="wind" id="windForecast">wind</div>
+				<div class="rain" id="rainForecast">rain</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -15,7 +15,7 @@ header {
     margin-top: 8px; }
     header form input {
       height: 15px;
-      background-color: #c8d9f9;
+      background-color: #bbd0f7;
       border: none;
       border-radius: 3px;
       color: black;
@@ -107,11 +107,11 @@ footer {
   -ms-flex-pack: space-evenly;
   justify-content: space-evenly; }
 
-.forcastContainer {
+.forecastContainer {
   bottom: 60px;
   position: fixed;
   width: 100%; }
-  .forcastContainer .forcastGroup {
+  .forecastContainer .forecastGroup {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -120,7 +120,7 @@ footer {
     justify-content: space-evenly;
     margin: 0 auto 0 auto;
     width: 80%; }
-    .forcastContainer .forcastGroup .forcastDay {
+    .forecastContainer .forecastGroup .forecastDay {
       border: 1px solid white;
       -webkit-box-align: center;
       -ms-flex-align: center;
@@ -135,7 +135,47 @@ footer {
       -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
       justify-content: space-evenly;
-      padding: 20px;
+      padding: 15px;
       width: 15%; }
-      .forcastContainer .forcastGroup .forcastDay .forcastItem {
+      .forecastContainer .forecastGroup .forecastDay .forecastItem {
         margin-bottom: 7px; }
+
+.iconForecast img {
+  height: 100px;
+  margin: -20px 0 -30px 0; }
+
+.tempRow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+  width: 80%;
+  font-size: 30px; }
+
+.descriptionForecast {
+  font-size: 17px;
+  text-align: center;
+  font-style: italic; }
+
+.miscWeather {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 90%; }
+  .miscWeather img {
+    width: 40px; }
+  .miscWeather .wind, .miscWeather .rain {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between; }

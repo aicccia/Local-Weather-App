@@ -105,30 +105,68 @@ footer {
   justify-content: space-evenly;
 }
 
-.forcastContainer {
+//Forecast Styles
+
+.forecastContainer {
   bottom: 60px;
   position: fixed;
   width: 100%;
-  .forcastGroup {
+  .forecastGroup {
 	display: flex;
 	justify-content: space-evenly;
 	margin: 0 auto 0 auto;
 	width: 80%;
-	.forcastDay {
+	.forecastDay {
 	  border: 1px solid white;
 	  align-items: center;
 	  display: flex;
 	  flex-direction: column;
 	  justify-content: space-evenly;
-	  padding: 20px;
+	  padding: 15px;
 	  width: 15%;
-	  .forcastItem {
+	  .forecastItem {
 		margin-bottom: 7px;
 	  }
 	}
-
   }
 }
+
+.iconForecast {
+  img {
+	height: 100px;
+	margin: -20px 0 -30px 0;
+  }
+}
+
+.tempRow {
+  display: flex;
+  justify-content: space-evenly;
+  width: 80%;
+  font-size: 30px;
+}
+
+.descriptionForecast {
+  font-size: 17px;
+  text-align: center;
+  font-style: italic;
+}
+
+
+.miscWeather {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  img {
+	width: 40px;
+  }
+  .wind, .rain {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+  }
+}
+
+
 
 
 
