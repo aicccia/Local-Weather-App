@@ -93,9 +93,7 @@ footer {
     .tempSystem .temp:hover {
       border: 1px solid black;
       border-radius: 3px;
-      background-color: #a4c0f4;
-      -webkit-box-shadow: 1px 1px black;
-      box-shadow: 1px 1px black; }
+      background-color: #a4c0f4; }
 
 .description {
   text-align: center;
@@ -145,7 +143,8 @@ footer {
       -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
       justify-content: space-evenly;
-      width: 15%; }
+      width: 15%;
+      padding: 10px; }
       .forecastContainer .forecastGroup .forecastDay .forecastItem {
         margin-bottom: 7px; }
 
@@ -203,8 +202,11 @@ footer {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center; }
+  .forecastDetail img {
+    margin: -5px; }
   .forecastDetail .forecastDetailQuad {
     height: 48%;
-    border: 1px solid black;
     text-align: center;
     width: 48%; }
+    .forecastDetail .forecastDetailQuad .forecastDetailTime {
+      font-size: 15px; }

@@ -95,7 +95,6 @@ footer {
 	  border: 1px solid black;
 	  border-radius: 3px;
 	  background-color: hsl(219, 79%, 80%);
-	  box-shadow: 1px 1px black;
 	}
   }
 }
@@ -137,6 +136,7 @@ footer {
 	  flex-direction: column;
 	  justify-content: space-evenly;
 	  width: 15%;
+	  padding: 10px;
 	  .forecastItem {
 		margin-bottom: 7px;
 	  }
@@ -188,11 +188,16 @@ footer {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  img {
+	margin: -5px;
+  }
   .forecastDetailQuad {
 	height: 48%;
-	border: 1px solid black;
 	text-align: center;
 	width: 48%;
+	.forecastDetailTime {
+	  font-size: 15px;
+	}
 
   }
 }
