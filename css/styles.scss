@@ -77,23 +77,25 @@ footer {
   justify-content: space-around;
   float: left;
   margin: 10px 0 0 30px;
-  width: 90px;
+  width: 120px;
+  .selected {
+	background-color: hsl(219, 79%, 80%);
+  }
   .temp {
-	border: 1px solid transparent;
+	border: 1px solid darkslategrey;
+	border-radius: 3px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	font-size: 1.2rem;
 	height: 26px;
 	text-align: center;
-	width: 40px;
+	width: 45px;
 	&:hover {
-	  border: 1px solid white;
+	  border: 1px solid black;
 	  border-radius: 3px;
 	  background-color: hsl(219, 79%, 80%);
-	}
-	.activate {
-
+	  box-shadow: 1px 1px black;
 	}
   }
 }
@@ -194,6 +196,7 @@ footer {
 
   }
 }
+
 
 
 

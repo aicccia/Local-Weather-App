@@ -71,9 +71,12 @@ footer {
   justify-content: space-around;
   float: left;
   margin: 10px 0 0 30px;
-  width: 90px; }
+  width: 120px; }
+  .tempSystem .selected {
+    background-color: #a4c0f4; }
   .tempSystem .temp {
-    border: 1px solid transparent;
+    border: 1px solid darkslategrey;
+    border-radius: 3px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -86,11 +89,13 @@ footer {
     font-size: 1.2rem;
     height: 26px;
     text-align: center;
-    width: 40px; }
+    width: 45px; }
     .tempSystem .temp:hover {
-      border: 1px solid white;
+      border: 1px solid black;
       border-radius: 3px;
-      background-color: #a4c0f4; }
+      background-color: #a4c0f4;
+      -webkit-box-shadow: 1px 1px black;
+      box-shadow: 1px 1px black; }
 
 .description {
   text-align: center;

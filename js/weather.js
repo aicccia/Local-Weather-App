@@ -1,54 +1,53 @@
 //************************************************
 //*********Event triggers for main functions
 //************************************************
+let forecastDetailSaved = [], forecastSaved = [];
+let temperatureSystemIsF = true;
 
 $(document).ready(function () {
-	let temperatureSystemIsF = true;
-	let forecastDetailSaved = [], forecastSaved = [];
-
-
 	$("#zipcode").css("opacity", 0).animate({opacity: 1}, 3000);
+
+	const json = JSON.stringify(temperatureSystemIsF);
+	localStorage.setItem('temperatureSystemIsF', json);
 
 	//gets latitude and longitude and then calls getCurrentWeather() and getForcastWeather()
 	navigator.geolocation.getCurrentPosition(getCurrentPositionSuccess);
 
-	$("#fahrenheit").click(function() {
-		$()
+	$("#fahrenheit").click(function () {
+		if (!$(this).hasClass("selected")) {
+			temperatureSystemIsF = true;
+			const json = JSON.stringify(temperatureSystemIsF);
+			localStorage.setItem('temperatureSystemIsF', json);
 
+			const jsonlatlog = localStorage.getItem('latlog');
+			const latlog = JSON.parse(jsonlatlog);
+
+			updateTemperature(latlog[0], latlog[1], temperatureSystemIsF);
+			$(this).addClass("selected");
+			$("#celsius").removeClass("selected");
+		}
 	});
 
-	$("#forecastDay1").on("mouseenter", { value: 1 }, OnMouseEnter);
-	$("#forecastDay2").on("mouseenter", { value: 2 }, OnMouseEnter);
-	$("#forecastDay3").on("mouseenter", { value: 3 }, OnMouseEnter);
-	$("#forecastDay4").on("mouseenter", { value: 4 }, OnMouseEnter);
-	$("#forecastDay5").on("mouseenter", { value: 5 }, OnMouseEnter);
+	$("#celsius").click(function () {
+		if (!$(this).hasClass("selected")) {
+			temperatureSystemIsF = false;
+			const json = JSON.stringify(temperatureSystemIsF);
+			localStorage.setItem('temperatureSystemIsF', json);
 
+			const jsonlatlog = localStorage.getItem('latlog');
+			const latlog = JSON.parse(jsonlatlog);
 
-	function OnMouseEnter(event) {
-		let $forecastDay = $(`#forecastDay${event.data.value}`);
-		$forecastDay.off("mouseenter");
-		if (!forecastSaved[event.data.value]) {
-			forecastSaved[event.data.value] = $forecastDay.html();
+			updateTemperature(latlog[0], latlog[1], temperatureSystemIsF);
+			$(this).addClass("selected");
+			$("#fahrenheit").removeClass("selected");
 		}
-		if (!forecastDetailSaved[event.data.value]) {
-			$forecastDay.empty().append(printForecastDayDetail(event.data.value));
-		} else {
-			$forecastDay.empty().append(forecastDetailSaved[event.data.value]);
-		}
-		$forecastDay.on("mouseleave", { value: event.data.value }, OnMouseLeave);
-	}
+	});
 
-	function OnMouseLeave(event) {
-		let $forecastDay = $(`#forecastDay${event.data.value}`);
-		$forecastDay.off("mouseleave");
-		if (!forecastDetailSaved[event.data.value]) {
-			forecastDetailSaved[event.data.value] = $forecastDay.html();
-		}
-		$forecastDay.empty().append(forecastSaved[event.data.value]);
-		$forecastDay.on("mouseenter", { value: event.data.value }, OnMouseEnter);
-	}
-
-
+	$("#forecastDay1").on("mouseenter", {value: 1}, OnMouseEnter);
+	$("#forecastDay2").on("mouseenter", {value: 2}, OnMouseEnter);
+	$("#forecastDay3").on("mouseenter", {value: 3}, OnMouseEnter);
+	$("#forecastDay4").on("mouseenter", {value: 4}, OnMouseEnter);
+	$("#forecastDay5").on("mouseenter", {value: 5}, OnMouseEnter);
 
 
 	$("#zipcode").submit(function (event) {
@@ -62,6 +61,10 @@ $(document).ready(function () {
 
 				getAndUpdateCurrentWeather(newlat, newlog);
 				getAndUpdateForecastWeather(newlat, newlog);
+
+				const latlog = [newlat, newlog];
+				const jsonlatlog = JSON.stringify(latlog);
+				localStorage.setItem('latlog', jsonlatlog);
 			});
 		} else {
 			$("#zip").val("Please enter a 5-digit number.");
@@ -70,16 +73,43 @@ $(document).ready(function () {
 	});
 });
 
+ function updateTemperature(lat, lon, temperatureSystemIsF ) {
+
+	const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4bd0296ac3468ba55671920cabb0f745`;
+	$.getJSON(url, function (weather) {
+		const temp = weather.main.temp;
+		$("#currentTemperature").css("opacity", 0).empty().append(`<p> ${getCurrentTemperature(temp, temperatureSystemIsF)}&#176</p>`).animate({opacity: 1}, 2000);
+	});
+
+	 const urlForecast = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=4bd0296ac3468ba55671920cabb0f745`;
+
+	 $.getJSON(urlForecast, function (weatherForecast) {
+		 for (let i = 1; i < 6; i++) {
+			 $(`#maxTemp${i}`).css("opacity", 0).empty().append(`<p>${getHighTemp(weatherForecast, (i - 1), (i - 1) + 7, temperatureSystemIsF)}</p>`).animate({opacity: 1}, 2000);
+			 $(`#minTemp${i}`).css("opacity", 0).empty().append(`<p>${getLowTemp(weatherForecast, (i - 1), (i - 1) + 7, temperatureSystemIsF)}</p>`).animate({opacity: 1}, 2000);
+		 }
+	 });
+}
+
+
+
 
 //*********************************************
 //*************Main Functions
 //********************************************
 function getCurrentPositionSuccess(position) {
-	getCurrentWeatherData(position.coords.latitude, position.coords.longitude);
-	getForecastData(position.coords.latitude, position.coords.longitude);
+	const json = localStorage.getItem('temperatureSystemIsF');
+	const temperatureSystemIsF = JSON.parse(json);
+
+	getCurrentWeatherData(position.coords.latitude, position.coords.longitude,temperatureSystemIsF);
+	getForecastData(position.coords.latitude, position.coords.longitude,temperatureSystemIsF);
+
+	const latlog = [position.coords.latitude, position.coords.longitude];
+	const jsonlatlog = JSON.stringify(latlog);
+	localStorage.setItem('latlog', jsonlatlog);
 }
 
-function getCurrentWeatherData(lat, lon) {
+function getCurrentWeatherData(lat, lon, temperatureSystemIsF) {
 	const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4bd0296ac3468ba55671920cabb0f745`;
 
 	$.getJSON(url, function (weather) {
@@ -94,7 +124,7 @@ function getCurrentWeatherData(lat, lon) {
 		const windspeed = ((weather.wind.speed * 3600) * 3.28 / 5280).toFixed(0);
 		const visibility = Math.round(weather.visibility * 0.000621371);
 
-		$("#currentTemperature").empty().append(`<p> ${getCurrentTemperature(temp,true)}&#176</p>`);
+		$("#currentTemperature").empty().append(`<p> ${getCurrentTemperature(temp, temperatureSystemIsF)}&#176</p>`);
 		$("#currentDescription").empty().append(`<p> ${des} </p>`);
 		$("#weatherIcon").empty().append(`<img src='icons/${getWeatherIcon(cloudCoverage, false)}'>`);
 		$("#updated").css("opacity", 0.2).empty().append(`<p>updated as of ${time}</p>`).animate({opacity: 1}, 1000);
@@ -106,15 +136,15 @@ function getCurrentWeatherData(lat, lon) {
 }
 
 
-function getForecastData(lat, lon) {
+function getForecastData(lat, lon, temperatureSystemIsF) {
 	const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=4bd0296ac3468ba55671920cabb0f745`;
 
 	$.getJSON(url, function (weatherForecast) {
 		for (let i = 1; i < 6; i++) {
 			$(`#date${i}`).css("opacity", 0.2).empty().append(`<p>${updateForecastDates(i)[0]} ${updateForecastDates(i)[1]}</p>`).animate({opacity: 1}, 1000);
 			$(`#iconForecast${i}`).css("opacity", 0.2).empty().append(`<img src='icons/${getWeatherIcon(getAverageCloudCoverage(weatherForecast, (i - 1), (i - 1) + 7), true)}'>`).animate({opacity: 1}, 1000);
-			$(`#maxTemp${i}`).css("opacity", 0.2).empty().append(`<p>${getHighTemp(weatherForecast, (i - 1), (i - 1) + 7, "F")}</p>`).animate({opacity: 1}, 1000);
-			$(`#minTemp${i}`).css("opacity", 0.2).empty().append(`<p>${getLowTemp(weatherForecast, (i - 1), (i - 1) + 7, "F")}</p>`).animate({opacity: 1}, 1000);
+			$(`#maxTemp${i}`).css("opacity", 0.2).empty().append(`<p>${getHighTemp(weatherForecast, (i - 1), (i - 1) + 7, temperatureSystemIsF)}</p>`).animate({opacity: 1}, 1000);
+			$(`#minTemp${i}`).css("opacity", 0.2).empty().append(`<p>${getLowTemp(weatherForecast, (i - 1), (i - 1) + 7, temperatureSystemIsF)}</p>`).animate({opacity: 1}, 1000);
 			$(`#description${i}`).css("opacity", 0.2).empty().append(`<p>${createDescription(weatherForecast, (i - 1), (i - 1) + 7)}</p>`).animate({opacity: 1}, 1000);
 			$(`#windForecast${i}`).css("opacity", 0.2).empty().append(`<img src="icons/wi-strong-wind.svg"> <p>${getAverageWindSpeed(weatherForecast, (i - 1), (i - 1) + 7, "F")} mph</p>`).animate({opacity: 1}, 1000);
 			$(`#rainForecast${i}`).css("opacity", 0.2).empty().append(`<img src="icons/wi-raindrops.svg"><p>${getAverageRain(weatherForecast, (i - 1), (i - 1) + 7)}%</p>`).animate({opacity: 1}, 1000);
@@ -136,7 +166,7 @@ function getAndUpdateForecastDetail(day) {
 //*****************************************************
 //****************Helper Functions
 //*****************************************************
-function getCurrentTemperature(temp,temperatureSystemIsF)  {
+function getCurrentTemperature(temp, temperatureSystemIsF) {
 	if (temperatureSystemIsF) {
 		return Math.round(Math.floor(temp) * (9 / 5) - 459.67);
 	} else {
@@ -243,28 +273,32 @@ function getDayOfWeek(day) {
 }
 
 
-function getHighTemp(weatherData, startPeriod, endPeriod, weatherSystem) {
+function getHighTemp(weatherData, startPeriod, endPeriod, temperatureSystemIsF) {
 	let maxTemp = 0;
 	for (let e = startPeriod; e < endPeriod + 1; e++) {
 		if (maxTemp < weatherData.list[e].main.temp_max) {
 			maxTemp = weatherData.list[e].main.temp_max;
 		}
 	}
-	if (weatherSystem) {
+	if (temperatureSystemIsF) {
 		return `${Math.round(maxTemp * (9 / 5) - 459.67)}&#176`;
+	} else {
+		return `${Math.round(maxTemp - 273.15)}&#176`;
 	}
 
 }
 
-function getLowTemp(weatherData, startPeriod, endPeriod, weatherSystem) {
+function getLowTemp(weatherData, startPeriod, endPeriod, temperatureSystemIsF) {
 	let minTemp = 1000;
 	for (let e = startPeriod; e < endPeriod + 1; e++) {
 		if (minTemp > weatherData.list[e].main.temp_min) {
 			minTemp = weatherData.list[e].main.temp_min;
 		}
 	}
-	if (weatherSystem === "F") {
+	if (temperatureSystemIsF) {
 		return `${Math.round(minTemp * (9 / 5) - 459.67)}&#176`;
+	} else {
+		return `${Math.round(minTemp - 273.15)}&#176`;
 	}
 }
 
@@ -351,6 +385,30 @@ function printForecastDayDetail(day) {
 			<div class="forecastDetailTemp" id="forecastDetailTemp=${day}4">temp</div>
 		</div>
 	</div>`;
+}
+
+function OnMouseEnter(event) {
+	let $forecastDay = $(`#forecastDay${event.data.value}`);
+	$forecastDay.off("mouseenter");
+	if (!forecastSaved[event.data.value]) {
+		forecastSaved[event.data.value] = $forecastDay.html();
+	}
+	if (!forecastDetailSaved[event.data.value]) {
+		$forecastDay.empty().append(printForecastDayDetail(event.data.value));
+	} else {
+		$forecastDay.empty().append(forecastDetailSaved[event.data.value]);
+	}
+	$forecastDay.on("mouseleave", {value: event.data.value}, OnMouseLeave);
+}
+
+function OnMouseLeave(event) {
+	let $forecastDay = $(`#forecastDay${event.data.value}`);
+	$forecastDay.off("mouseleave");
+	if (!forecastDetailSaved[event.data.value]) {
+		forecastDetailSaved[event.data.value] = $forecastDay.html();
+	}
+	$forecastDay.empty().append(forecastSaved[event.data.value]);
+	$forecastDay.on("mouseenter", {value: event.data.value}, OnMouseEnter);
 }
 
 
