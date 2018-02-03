@@ -1,28 +1,33 @@
+$primaryColor: hsl(219, 79%, 85%);
+$secondaryColor: hsl(219, 79%, 40%);
+$headerAndFooter: hsl(219, 79%, 66%);
+
+
 body {
-  background: hsl(219, 79%, 85%);
+  background: $primaryColor;
   font-size: 20px;
-  width: 100%;
   height: 100%;
+  width: 100%;
 }
 
 header {
+  background-color: $headerAndFooter;
+  border-bottom: 1px solid $secondaryColor;
   height: 50px;
-  background-color: hsl(219, 79%, 66%);
-  border-bottom: 2px solid hsl(219, 79%, 40%);
   margin-bottom: 50px;
   width: 100%;
   form {
 	float: right;
 	margin-top: 8px;
 	input {
-	  height: 15px;
-	  background-color: hsl(219, 79%, 85%);
-	  border: none;
-	  border-radius: 3px;
 	  color: black;
+	  background-color: $primaryColor;
+	  border: 1px solid $secondaryColor;
+	  border-radius: 3px;
+	  height: 15px;
 	  letter-spacing: 0.2rem;
-	  padding: 10px;
 	  margin: 0 20px 0 20px;
+	  padding: 10px;
 	  outline: none;
 	  &:focus {
 		background-color: hsl(219, 79%, 95%);
@@ -39,12 +44,15 @@ main {
 }
 
 footer {
-  border-top: 1px solid black;
+  background-color: $headerAndFooter;
+  border-top: 1px solid $secondaryColor;
   bottom: 0;
-  height: 40px;
+  height: 50px;
+  font-size: 1rem;
+  line-height: 50px;
   position: fixed;
+  text-align: center;
   width: 100%;
-
 }
 
 .location {
@@ -55,8 +63,8 @@ footer {
 
 .row1 {
   align-items: center;
-  font-family: Arial;
   display: flex;
+  font-family: Arial;
   justify-content: center;
   margin: 30px 0 30px 0;
   .weatherPic img {
@@ -69,47 +77,17 @@ footer {
   }
 }
 
-
-//F - C switched
-
-.tempSystem {
-  display: flex;
-  justify-content: space-around;
-  float: left;
-  margin: 10px 0 0 30px;
-  width: 120px;
-  .selected {
-	background-color: hsl(219, 79%, 80%);
-  }
-  .temp {
-	border: 1px solid darkslategrey;
-	border-radius: 3px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 1.2rem;
-	height: 26px;
-	text-align: center;
-	width: 45px;
-	&:hover {
-	  border: 1px solid black;
-	  border-radius: 3px;
-	  background-color: hsl(219, 79%, 80%);
-	}
-  }
-}
-
 .description {
-  text-align: center;
   font-size: 2rem;
   margin: 30px 0 10px 0;
+  text-align: center;
 }
 
 .updated {
-  text-align: center;
   font-size: 1rem;
   font-style: italic;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
+  text-align: center;
 }
 
 .bottomRow {
@@ -117,8 +95,39 @@ footer {
   justify-content: space-evenly;
 }
 
-//Forecast Styles
 
+//F - C switched
+
+.tempSystem {
+  display: flex;
+  float: left;
+  justify-content: space-around;
+  margin: 10px 0 0 30px;
+  width: 120px;
+  .selected {
+	background-color: $primaryColor;
+  }
+  .temp {
+	align-items: center;
+	border: 1px solid $secondaryColor;
+	border-radius: 3px;
+	display: flex;
+	font-size: 1.2rem;
+	height: 26px;
+	justify-content: center;
+	text-align: center;
+	width: 45px;
+	&:hover {
+	  background-color: $primaryColor;
+	  border-radius: 3px;
+	}
+  }
+}
+
+
+
+
+//Forecast Styles
 .forecastContainer {
   bottom: 150px;
   position: fixed;
@@ -129,14 +138,15 @@ footer {
 	margin: 0 auto 0 auto;
 	width: 80%;
 	.forecastDay {
+	  align-items: center;
 	  border: 1px solid white;
 	  border-radius: 3px;
-	  align-items: center;
 	  display: flex;
 	  flex-direction: column;
 	  justify-content: space-evenly;
-	  width: 15%;
+	  height: 250px;
 	  padding: 10px;
+	  width: 15%;
 	  .forecastItem {
 		margin-bottom: 7px;
 	  }
@@ -153,15 +163,15 @@ footer {
 
 .tempRow {
   display: flex;
+  font-size: 30px;
   justify-content: space-evenly;
   width: 80%;
-  font-size: 30px;
 }
 
 .descriptionForecast {
   font-size: 17px;
-  text-align: center;
   font-style: italic;
+  text-align: center;
 }
 
 
@@ -173,21 +183,21 @@ footer {
 	width: 40px;
   }
   .wind, .rain {
-	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	display: flex;
   }
 }
 
 //Forecast Details Styles
 
 .forecastDetail {
-  height: 100%;
-  width: 100%;
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
+  height: 100%;
   justify-content: center;
-  align-items: center;
+  width: 100%;
   img {
 	margin: -5px;
   }
@@ -200,6 +210,23 @@ footer {
 	}
 
   }
+}
+
+//Red Button styles
+#forecastDay2 {
+  position: relative;
+}
+
+.redButton {
+  background-color: red;
+  border: 1px solid black;
+  border-radius: 50%;
+  height: 20px;
+  left: -10px;
+  outline: none;
+  position: absolute;
+  top: -10px;
+  width: 20px;
 }
 
 

@@ -56,6 +56,8 @@ $(document).ready(() => {
   getAndUpdateForecastDetail();
 
 
+
+
   $('#zipcode').submit((event) => {
     const zipinput = $('#zip').val();
     // verifies that the input is a 5-digit number
@@ -108,6 +110,7 @@ function getCurrentPositionSuccess(position) {
   const temperatureSystemIsF = JSON.parse(json);
 
   getCurrentWeatherData(position.coords.latitude, position.coords.longitude, temperatureSystemIsF);
+
   getForecastData(position.coords.latitude, position.coords.longitude, temperatureSystemIsF);
 
   const latlog = [position.coords.latitude, position.coords.longitude];
@@ -148,19 +151,34 @@ function getCurrentWeatherData(lat, lon, temperatureSystemIsF) {
 
 
 function getForecastData(lat, lon, temperatureSystemIsF) {
+	let delayTime = 0;
+	let animationDelay = 700;
   const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=4bd0296ac3468ba55671920cabb0f745`;
 
   $.getJSON(url, (weatherForecast) => {
+
     for (let i = 1; i < 5; i++) {
-      $(`#date${i}`).css('opacity', 0.2).empty().append(`<p>${updateForecastDates(i)[0]} ${updateForecastDates(i)[1]}</p>`).animate({ opacity: 1 }, 1000);
-      $(`#iconForecast${i}`).css('opacity', 0.2).empty().append(`<img src='icons/${getWeatherIcon(getAverageCloudCoverage(weatherForecast, (i - 1), (i - 1) + 7), true)}'>`).animate({ opacity: 1 }, 1000);
-      $(`#maxTemp${i}`).css('opacity', 0.2).empty().append(`<p>${getHighTemp(weatherForecast, (i - 1), (i - 1) + 7, temperatureSystemIsF)}</p>`).animate({ opacity: 1 }, 1000);
-      $(`#minTemp${i}`).css('opacity', 0.2).empty().append(`<p>${getLowTemp(weatherForecast, (i - 1), (i - 1) + 7, temperatureSystemIsF)}</p>`).animate({ opacity: 1 }, 1000);
-      $(`#description${i}`).css('opacity', 0.2).empty().append(`<p>${createDescription(weatherForecast, (i - 1), (i - 1) + 7)}</p>`).animate({ opacity: 1 }, 1000);
-      $(`#windForecast${i}`).css('opacity', 0.2).empty().append(`<img src="icons/wi-strong-wind.svg"> <p>${getAverageWindSpeed(weatherForecast, (i - 1), (i - 1) + 7, 'F')} mph</p>`).animate({ opacity: 1 }, 1000);
-      $(`#rainForecast${i}`).css('opacity', 0.2).empty().append(`<img src="icons/wi-raindrops.svg"><p>${getAverageRain(weatherForecast, (i - 1), (i - 1) + 7)}%</p>`).animate({ opacity: 1 }, 1000);
+      $(`#date${i}`).css('opacity', 0).empty().append(`<p>${updateForecastDates(i)[0]} ${updateForecastDates(i)[1]}</p>`).delay(delayTime).animate({ opacity: 1 }, animationDelay);
+      $(`#iconForecast${i}`).css('opacity', 0).empty().append(`<img src='icons/${getWeatherIcon(getAverageCloudCoverage(weatherForecast, (i - 1), (i - 1) + 7), true)}'>`).delay(delayTime).animate({ opacity: 1 }, animationDelay);
+      $(`#maxTemp${i}`).css('opacity', 0).empty().append(`<p>${getHighTemp(weatherForecast, (i - 1), (i - 1) + 7, temperatureSystemIsF)}</p>`).delay(delayTime).animate({ opacity: 1 }, animationDelay);
+      $(`#minTemp${i}`).css('opacity', 0).empty().append(`<p>${getLowTemp(weatherForecast, (i - 1), (i - 1) + 7, temperatureSystemIsF)}</p>`).delay(delayTime).animate({ opacity: 1 }, animationDelay);
+      $(`#description${i}`).css('opacity', 0).empty().append(`<p>${createDescription(weatherForecast, (i - 1), (i - 1) + 7)}</p>`).delay(delayTime).animate({ opacity: 1 },animationDelay );
+      $(`#windForecast${i}`).css('opacity', 0).empty().append(`<img src="icons/wi-strong-wind.svg"> <p>${getAverageWindSpeed(weatherForecast, (i - 1), (i - 1) + 7, 'F')} mph</p>`).delay(delayTime).animate({ opacity: 1 }, animationDelay);
+      $(`#rainForecast${i}`).css('opacity', 0).empty().append(`<img src="icons/wi-raindrops.svg"><p>${getAverageRain(weatherForecast, (i - 1), (i - 1) + 7)}%</p>`).delay(delayTime).animate({ opacity: 1 }, animationDelay);
+      delayTime = delayTime + 200;
     }
   });
+}
+
+function stopAnimation(day, callback) {
+	$(`#date${day}`).finish();
+	$(`#iconForecast${day}`).finish();
+	$(`#maxTemp${day}`).finish();
+	$(`#minTemp${day}`).finish();
+	$(`#description${day}`).finish();
+	$(`#windForecast${day}`).finish();
+	$(`#rainForecast${day}`).finish();
+	callback();
 }
 
 
@@ -172,8 +190,7 @@ function getAndUpdateForecastDetail() {
 
   $.getJSON(url, (weatherForecast) => {
 
-    let day = 0;
-
+    let day = 1;
     // put in timezone swticher. UTC is currently 5 hours ahead(4 in the spring I think) and they only give data every 3 hours, making the time 6 hours ahead of us the closest forcast(in actuality this data is for 1 hours later(1 am instead of 12am)
     // to find the 12 am data for the next 4 nights
     for (let e = 0; e < weatherForecast.list.length && day < 5; e++) {
@@ -184,7 +201,7 @@ function getAndUpdateForecastDetail() {
         day++;
       }
     }
- day =0;
+ day = 1;
     // //to find the 6am data for the next 4 days
 	  for (let e = 0; e < weatherForecast.list.length && day < 5; e++) {
 		  if (weatherForecast.list[e].dt_txt.includes('12:00:00')) {
@@ -194,7 +211,7 @@ function getAndUpdateForecastDetail() {
 			  day++;
 		  }
 	  }
-	  day =0;
+	  day = 1;
     // //to find the noon data for the next 4 days
 	  for (let e = 0; e < weatherForecast.list.length && day < 5; e++) {
 		  if (weatherForecast.list[e].dt_txt.includes('18:00:00')) {
@@ -204,7 +221,7 @@ function getAndUpdateForecastDetail() {
 			  day++;
 		  }
 	  }
-	  day =0;
+	  day = 1;
     // //to find the 6pm data for the next 4 nights
 	  for (let e = 0; e < weatherForecast.list.length && day < 5; e++) {
 		  if (weatherForecast.list[e].dt_txt.includes('00:00:00')) {
@@ -481,35 +498,39 @@ function createDescription(weatherData, startPeriod, endPeriod) {
 function printForecastDayDetail(day) {
   return `
 	<div class="forecastDetail" id="11">
-		<div class="forecastDetailQuad" id="forecastDetail${day}1">
-			<div class="forecastDetailTime" id="forecastDetailTime${day}1">time</div>
-			<div class="forecastDetailIcon" id="forecastDetailIcon${day}1">icon</div>
-			<div class="forecastDetailTemp" id="forecastDetailTemp${day}1">temp</div>
+		<div class="forecastDetailQuad" id="forecastDetail11">
+			<div class="forecastDetailTime" id="forecastDetailTime${day}1"></div>
+			<div class="forecastDetailIcon" id="forecastDetailIcon${day}1"></div>
+			<div class="forecastDetailTemp" id="forecastDetailTemp${day}1"></div>
 		</div>
 		<div class="forecastDetailQuad" id="forecastDetail12">
-			<div class="forecastDetailTime" id="forecastDetailTime${day}2">time</div>
-			<div class="forecastDetailIcon" id="forecastDetailIcon${day}2">icon</div>
-			<div class="forecastDetailTemp" id="forecastDetailTemp${day}2">temp</div>
-		</div>
-		<div class="forecastDetailQuad" id="forecastDetail13">
-			<div class="forecastDetailTime" id="forecastDetailTime${day}3">time</div>
-			<div class="forecastDetailIcon" id="forecastDetailIcon${day}3">icon</div>
-			<div class="forecastDetailTemp" id="forecastDetailTemp${day}3">temp</div>
+			<div class="forecastDetailTime" id="forecastDetailTime${day}2"></div>
+			<div class="forecastDetailIcon" id="forecastDetailIcon${day}2"></div>
+			<div class="forecastDetailTemp" id="forecastDetailTemp${day}2"></div>
 		</div>
 		<div class="forecastDetailQuad" id="forecastDetail14">
-			<div class="forecastDetailTime" id="forecastDetailTime${day}4">time</div>
-			<div class="forecastDetailIcon" id="forecastDetailIcon${day}4">icon</div>
-			<div class="forecastDetailTemp" id="forecastDetailTemp${day}4">temp</div>
+			<div class="forecastDetailTime" id="forecastDetailTime${day}4"></div>
+			<div class="forecastDetailIcon" id="forecastDetailIcon${day}4"></div>
+			<div class="forecastDetailTemp" id="forecastDetailTemp${day}4"></div>
+		</div>
+		<div class="forecastDetailQuad" id="forecastDetail13">
+			<div class="forecastDetailTime" id="forecastDetailTime${day}3"></div>
+			<div class="forecastDetailIcon" id="forecastDetailIcon${day}3"></div>
+			<div class="forecastDetailTemp" id="forecastDetailTemp${day}3"></div>
 		</div>
 	</div>`;
 }
 
 function OnMouseEnter(event) {
   const $forecastDay = $(`#forecastDay${event.data.value}`);
+  $(".redButton").hide();
   $forecastDay.off('mouseenter');
-  if (!forecastSaved[event.data.value]) {
-    forecastSaved[event.data.value] = $forecastDay.html();
+  if (!forecastSaved[event.data.value] && ($(`#rainForecast4`).text() !== "")) {
+	  stopAnimation(event.data.value, function () {
+		  forecastSaved[event.data.value] = $forecastDay.html();
+	  });
   }
+
   if (!forecastDetailSaved[event.data.value]) {
     $forecastDay.empty().append(printForecastDayDetail(event.data.value));
     getAndUpdateForecastDetail();
@@ -522,7 +543,7 @@ function OnMouseEnter(event) {
 function OnMouseLeave(event) {
   const $forecastDay = $(`#forecastDay${event.data.value}`);
   $forecastDay.off('mouseleave');
-  if (!forecastDetailSaved[event.data.value]) {
+  if (!forecastDetailSaved[event.data.value] && ($(`#forecastDetailTemp${event.data.value}4`).text() !== "")) {
     forecastDetailSaved[event.data.value] = $forecastDay.html();
   }
   $forecastDay.empty().append(forecastSaved[event.data.value]);
