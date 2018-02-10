@@ -65,6 +65,9 @@ $(document).ready(() => {
 			$.getJSON(zipurl, (zipdata) => {
 				const newlat = zipdata.results[0].geometry.location.lat;
 				const newlog = zipdata.results[0].geometry.location.lng;
+				forecastDetailSaved = [];
+				forecastSaved = [];
+
 
 				getCurrentWeatherData(newlat, newlog, temperatureSystemIsF);
 				getForecastData(newlat, newlog, temperatureSystemIsF);
@@ -74,7 +77,7 @@ $(document).ready(() => {
 				localStorage.setItem('latlog', jsonlatlog);
 			});
 		} else {
-			$('#zip').val('please try again');
+			$('#zip').val('5-digit number only');
 		}
 
 	});
@@ -132,7 +135,7 @@ function getCurrentWeatherData(lat, lon, temperatureSystemIsF) {
 		const visibility = Math.round(weather.visibility * 0.000621371);
 
 		$('#currentTemperature').empty().append(`<p> ${getCurrentTemperature(temp, temperatureSystemIsF)}&#176</p>`);
-		$('#currentDescription').empty().append(`<p> ${des} </p>`);
+		$('#currentDescription').empty().append(`<p>"${des}"</p>`);
 		$('#weatherIcon').empty().append(`<img src='icons/${getWeatherIcon(cloudCoverage, false)}'>`);
 		$('#updated').css('opacity', 0.2).empty().append(`<p>updated as of ${time}</p>`)
 			.animate({opacity: 1}, 1000);
@@ -156,7 +159,7 @@ function getForecastData(lat, lon, temperatureSystemIsF) {
 	$.getJSON(url, (weatherForecast) => {
 
 		for (let i = 1; i < 5; i++) {
-			$(`#date${i}`).css('opacity', 0).empty().append(`<p>${updateForecastDates(i)[0]} ${updateForecastDates(i)[1]}</p>`).delay(delayTime).animate({opacity: 1}, animationDelay);
+			$(`#date${i}`).css('opacity', 0).empty().append(`<h2>${updateForecastDates(i)[0]} ${updateForecastDates(i)[1]}</h2>`).delay(delayTime).animate({opacity: 1}, animationDelay);
 			$(`#iconForecast${i}`).css('opacity', 0).empty().append(`<img src='icons/${getWeatherIcon(getAverageCloudCoverage(weatherForecast, (i - 1), (i - 1) + 7), true)}'>`).delay(delayTime).animate({opacity: 1}, animationDelay);
 			$(`#maxTemp${i}`).css('opacity', 0).empty().append(`<p>${getHighTemp(weatherForecast, (i - 1), (i - 1) + 7, temperatureSystemIsF)}</p>`).delay(delayTime).animate({opacity: 1}, animationDelay);
 			$(`#minTemp${i}`).css('opacity', 0).empty().append(`<p>${getLowTemp(weatherForecast, (i - 1), (i - 1) + 7, temperatureSystemIsF)}</p>`).delay(delayTime).animate({opacity: 1}, animationDelay);
@@ -193,7 +196,7 @@ function getAndUpdateForecastDetail() {
 		// to find the 12 am data for the next 4 nights
 		for (let e = 0; e < weatherForecast.list.length && day < 5; e++) {
 			if (weatherForecast.list[e].dt_txt.includes('06:00:00')) {
-				$(`#forecastDetailTime${day}1`).empty().append('<p>12:00 am</p>');
+				$(`#forecastDetailTime${day}1`).empty().append('<h3>12:00 am</h3>');
 				$(`#forecastDetailIcon${day}1`).empty().append(`<img src='icons/${getDetailForecastIcon(weatherForecast.list[e].weather[0].id, false)}'>`);
 				$(`#forecastDetailTemp${day}1`).empty().append(`<p>${getCurrentTemperature(weatherForecast.list[e].main.temp, temperatureSystemIsF)}&#176</p>`);
 				day++;
@@ -203,7 +206,7 @@ function getAndUpdateForecastDetail() {
 		// //to find the 6am data for the next 4 days
 		for (let e = 0; e < weatherForecast.list.length && day < 5; e++) {
 			if (weatherForecast.list[e].dt_txt.includes('12:00:00')) {
-				$(`#forecastDetailTime${day}2`).empty().append('<p>6:00 am</p>');
+				$(`#forecastDetailTime${day}2`).empty().append('<h3>6:00 am</h3>');
 				$(`#forecastDetailIcon${day}2`).empty().append(`<img src='icons/${getDetailForecastIcon(weatherForecast.list[e].weather[0].id, true)}'>`);
 				$(`#forecastDetailTemp${day}2`).empty().append(`<p>${getCurrentTemperature(weatherForecast.list[e].main.temp, temperatureSystemIsF)}&#176</p>`);
 				day++;
@@ -213,7 +216,7 @@ function getAndUpdateForecastDetail() {
 		// //to find the noon data for the next 4 days
 		for (let e = 0; e < weatherForecast.list.length && day < 5; e++) {
 			if (weatherForecast.list[e].dt_txt.includes('18:00:00')) {
-				$(`#forecastDetailTime${day}3`).empty().append('<p>12:00 pm</p>');
+				$(`#forecastDetailTime${day}3`).empty().append('<h3>12:00 pm</h3>');
 				$(`#forecastDetailIcon${day}3`).empty().append(`<img src='icons/${getDetailForecastIcon(weatherForecast.list[e].weather[0].id, true)}'>`);
 				$(`#forecastDetailTemp${day}3`).empty().append(`<p>${getCurrentTemperature(weatherForecast.list[e].main.temp, temperatureSystemIsF)}&#176</p>`);
 				day++;
@@ -223,7 +226,7 @@ function getAndUpdateForecastDetail() {
 		// //to find the 6pm data for the next 4 nights
 		for (let e = 0; e < weatherForecast.list.length && day < 5; e++) {
 			if (weatherForecast.list[e].dt_txt.includes('00:00:00')) {
-				$(`#forecastDetailTime${day}4`).empty().append('<p>6:00 pm</p>');
+				$(`#forecastDetailTime${day}4`).empty().append('<h3>6:00 pm</h3>');
 				$(`#forecastDetailIcon${day}4`).empty().append(`<img src='icons/${getDetailForecastIcon(weatherForecast.list[e].weather[0].id, true)}'>`);
 				$(`#forecastDetailTemp${day}4`).empty().append(`<p>${getCurrentTemperature(weatherForecast.list[e].main.temp, temperatureSystemIsF)}&#176</p>`);
 				day++;

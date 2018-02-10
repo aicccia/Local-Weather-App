@@ -21,15 +21,15 @@ header {
 	  width: 100%;
 	  form {
 			float: right;
-			margin-top: 8px;
+			margin-top: 10px;
+			margin-right: 100px;
 			input {
 				  color: black;
 				  background-color: $primaryColor;
 				  border: 1px solid $secondaryColor;
-				  border-radius: 3px;
-				  height: 15px;
+				  border-radius: 4px;
+				  height: 10px;
 				  letter-spacing: 0.2rem;
-				  margin: 0 20px 0 20px;
 				  padding: 10px;
 				  outline: none;
 				  width: 200px;
@@ -41,50 +41,52 @@ header {
 }
 
 //tablet styles
-@media  (orientation: portrait) {
+@media (orientation: portrait) {
 	  header {
 			margin-bottom: 40px;
 			form {
+				  margin-right: 50px;
 				  input {
-						width: 200px;
 						font-size: 2rem;
 				  }
 			}
 	  }
 }
 
-
 //phone styles
-@media  (orientation: portrait)  and (max-width: 500px){
-	header {
-		  margin-bottom: 20px;
-		  form {
-				input {
-					  width: 100px;
-					  font-size: 3rem;
-				}
-		  }
-	}
+@media (orientation: portrait) and (max-width: 500px) {
+	  header {
+			margin-bottom: 20px;
+			form {
+				  margin-right: 10px;
+				  input {
+						font-size: 3rem;
+						width: 100px;
+				  }
+			}
+	  }
 }
+
 //////////////////////////////////
 //F - C switcher inside header styles
 //////////////////////////////////
 .tempSystem {
 	  display: flex;
 	  float: left;
-	  justify-content: space-around;
-	  margin: 10px 0 0 30px;
+	  justify-content: space-between;
+	  margin: 10px 0 0 100px;
 	  width: 120px;
 	  .selected {
 			background-color: $primaryColor;
+			font-weight: bold;
 	  }
 	  .temp {
 			align-items: center;
 			border: 1px solid $secondaryColor;
-			border-radius: 3px;
+			border-radius: 4px;
 			display: flex;
 			font-size: 1.2rem;
-			height: 26px;
+			height: 30px;
 			justify-content: center;
 			text-align: center;
 			width: 45px;
@@ -98,12 +100,12 @@ header {
 //tabet styles
 @media (orientation: portrait) {
 	  .tempSystem {
-			width: 150px;
-			margin-left: 30px;
+			margin-left: 50px;
+			width: 118px;
 			.temp {
-				  width: 50px;
-				  height: 30px;
 				  font-size: 2rem;
+				  height: 30px;
+				  width: 50px;
 			}
 	  }
 }
@@ -111,11 +113,10 @@ header {
 //phone styles
 @media (orientation: portrait) and (max-width: 500px) {
 	  .tempSystem {
-			width: 80px;
-			margin-left: 15px;
+			width: 114px;
+			margin-left: 10px;
 			.temp {
-				  width: 30px;
-				  height: 30px;
+				  font-size: 3rem;
 			}
 	  }
 }
@@ -136,7 +137,7 @@ footer {
 }
 
 //phone styles
-@media (orientation: portrait) and (max-width: 500px){
+@media (orientation: portrait) and (max-width: 500px) {
 	  footer {
 			height: 25px;
 			line-height: 25px;
@@ -165,7 +166,7 @@ main {
 			justify-content: center;
 			margin: 30px 0 30px 0;
 			.weatherPic img {
-				  margin: -60px;
+				  margin: -60px -20px -60px 0;
 				  width: 200px;
 			}
 			.currentTemperature {
@@ -179,21 +180,21 @@ main {
 			text-align: center;
 	  }
 	  .timeUpdated {
-			font-size: 1rem;
+			font-size: 30%;
 			font-style: italic;
 			text-align: center;
 			margin-top: 30px;
 	  }
 	  .currentWeatherDetails {
 			display: flex;
-			font-size: 50%;
+			font-size: 45%;
 			justify-content: space-evenly;
 			margin-top: 30px;
 	  }
 }
 
 //small laptop styles
-@media (max-width: 1600px) and (orientation: landscape){
+@media (max-width: 1600px) and (orientation: landscape) {
 	  main {
 			font-size: 4rem;
 			.iconAndTemperature {
@@ -214,7 +215,7 @@ main {
 @media (orientation: portrait) {
 	  main {
 			width: 80%;
-			font-size: 4rem;
+			font-size: 5rem;
 			.iconAndTemperature .weatherPic img {
 				  margin: -30px;
 				  width: 100px;
@@ -224,28 +225,33 @@ main {
 			}
 			.timeUpdated {
 				  font-size: 1.5rem;
-				  margin-bottom: 0;
 			}
 	  }
 }
 
-
 //phone styles
 @media (orientation: portrait) and (max-width: 500px) {
-	main {
-		  width: 80%;
-		  font-size: 4rem;
-		  .iconAndTemperature .weatherPic img {
-				margin: -30px;
-				width: 100px;
-		  }
-		  .currentDescription {
-				margin: 10px;
-		  }
-		  .timeUpdated {
-				font-size: 1.5rem;
-		  }
-	}
+	  main {
+			width: 90%;
+			font-size: 5rem;
+			.iconAndTemperature {
+				  margin-bottom: 15px;
+				  .weatherPic img {
+						margin: -30px;
+						width: 100px;
+				  }
+			}
+			.currentDescription {
+				  margin: 0;
+			}
+			.timeUpdated {
+				  font-size: 1.5rem;
+				  margin-top: 10px;
+			}
+			.currentWeatherDetails {
+				  margin-top: 15px;
+			}
+	  }
 }
 
 ////////////////////////////////////
@@ -253,25 +259,25 @@ main {
 ////////////////////////////////////
 .forecastContainer {
 	  width: 100%;
-	  margin: 50px 0 100px 0;
+	  margin: 100px 0 100px 0;
 	  .forecastGroup {
 			display: flex;
-			justify-content: space-evenly;
+			justify-content: space-between;
 			margin: 0 auto 0 auto;
-			width: 80%;
+			width: 70%;
 			.forecastDay {
 				  align-items: center;
 				  border: 1px solid white;
-				  border-radius: 3px;
+				  border-radius: 4px;
 				  display: flex;
 				  flex-direction: column;
 				  //change this font-size to change font-size inside forecast day div
 				  font-size: 1rem;
-				  height: 30vh;
+				  height: 25vh;
 				  justify-content: space-between;
 				  align-content: space-around;
 				  padding: 10px;
-				  width: 15%;
+				  width: 20%;
 				  .forecastItem {
 						margin-bottom: 7px;
 				  }
@@ -289,18 +295,19 @@ main {
 }
 
 //tablet style
-@media (orientation: portrait)  {
+@media (orientation: portrait) {
 	  .forecastContainer {
-			margin-top:  10%;
+			margin-top: 5%;
 			.forecastGroup {
 				  flex-wrap: wrap;
+				  justify-content: center;
 				  height: 45vh;
-				  width: 80%;
+				  width: 90%;
 				  .forecastDay {
 						width: 30%;
 						height: 40%;
 						font-size: 2rem;
-						margin: 5px;
+						margin: 20px;
 				  }
 			}
 	  }
@@ -308,28 +315,24 @@ main {
 
 //phone style
 @media (orientation: portrait) and (max-width: 500px) {
-	  .forecastContainer {
-			height: 70%;
-			margin-top:  10%;
-			.forecastGroup {
-				  flex-wrap: wrap;
-				  height: 100%;
-				  width: 90%;
-				  .forecastDay {
-						width: 35%;
-						height: 40%;
-						font-size: 1.5rem;
-						margin: 5px;
-				  }
-			}
+	  .forecastContainer .forecastGroup .forecastDay {
+			font-size: 1.5rem;
+			margin: 10px;
+			padding: 5px;
+			width: 35%;
+
 	  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-//Styles for inside each of the 4 .forecastDay divs
+//Styles for inside each of the 4 forecastDay divs
 ////////////////////////////////////////////////////////////////////////////////
+.forecastDay h2 {
+	  text-decoration: underline;
+}
+
 .forecastDescriptionText {
-	  font-size: 100%;
+	  font-size: 110%;
 	  font-style: italic;
 	  text-align: center;
 }
@@ -346,7 +349,7 @@ main {
 	  width: 80%;
 }
 
-.forecastDetails {
+.forecastWindRain {
 	  display: flex;
 	  justify-content: space-between;
 	  width: 90%;
@@ -366,7 +369,7 @@ main {
 			height: 75px;
 			margin: -15px 0 -22px 0;
 	  }
-	  .forecastDetails img {
+	  .forecastWindRain img {
 			width: 25px;
 	  }
 }
@@ -379,7 +382,6 @@ main {
 	  }
 }
 
-
 /////////////////////////////////
 //Forecast Details Styles
 ////////////////////////////////
@@ -390,27 +392,35 @@ main {
 	  //change this font-size to change font-size for forecast details
 	  font-size: 1rem;
 	  height: 100%;
-	  justify-content: center;
-	  align-content: center;
-	  width: 100%;
+	  justify-content: space-evenly;
+	  align-content: space-between;
+	  h3 {
+			text-decoration: underline;
+	  }
 	  img {
 			margin: -5px;
 	  }
 	  .forecastDetailQuad {
-			height: 50%;
+			height: 40%;
 			font-size: 1.5rem;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			text-align: center;
-			width: 50%;
+			width: 40%;
 			.forecastDetailTime {
 				  font-size: 80%;
-				  margin-bottom: 10px;
 			}
 			.forecastDetailTemp {
 				  font-size: 100%;
 			}
+	  }
+}
+
+//phone styles
+@media (orientation: portrait) and (max-width: 500px) {
+	  .forecastDetail img {
+			width: 75%;
 	  }
 }
 
