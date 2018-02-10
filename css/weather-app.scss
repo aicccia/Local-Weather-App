@@ -1,0 +1,438 @@
+$primaryColor: hsl(219, 79%, 85%);
+$secondaryColor: hsl(219, 79%, 40%);
+$headerAndFooter: hsl(219, 79%, 66%);
+
+html {
+	  font-size: 0.8vmax;
+}
+
+body {
+	  background: $primaryColor;
+}
+
+////////////////////////////////
+//header styles
+////////////////////////////////
+header {
+	  background-color: $headerAndFooter;
+	  border-bottom: 1px solid $secondaryColor;
+	  height: 50px;
+	  margin-bottom: 50px;
+	  width: 100%;
+	  form {
+			float: right;
+			margin-top: 8px;
+			input {
+				  color: black;
+				  background-color: $primaryColor;
+				  border: 1px solid $secondaryColor;
+				  border-radius: 3px;
+				  height: 15px;
+				  letter-spacing: 0.2rem;
+				  margin: 0 20px 0 20px;
+				  padding: 10px;
+				  outline: none;
+				  width: 200px;
+				  &:focus {
+						background-color: hsl(219, 79%, 95%);
+				  }
+			}
+	  }
+}
+
+//tablet styles
+@media  (orientation: portrait) {
+	  header {
+			margin-bottom: 40px;
+			form {
+				  input {
+						width: 200px;
+						font-size: 2rem;
+				  }
+			}
+	  }
+}
+
+
+//phone styles
+@media  (orientation: portrait)  and (max-width: 500px){
+	header {
+		  margin-bottom: 20px;
+		  form {
+				input {
+					  width: 100px;
+					  font-size: 3rem;
+				}
+		  }
+	}
+}
+//////////////////////////////////
+//F - C switcher inside header styles
+//////////////////////////////////
+.tempSystem {
+	  display: flex;
+	  float: left;
+	  justify-content: space-around;
+	  margin: 10px 0 0 30px;
+	  width: 120px;
+	  .selected {
+			background-color: $primaryColor;
+	  }
+	  .temp {
+			align-items: center;
+			border: 1px solid $secondaryColor;
+			border-radius: 3px;
+			display: flex;
+			font-size: 1.2rem;
+			height: 26px;
+			justify-content: center;
+			text-align: center;
+			width: 45px;
+			&:hover {
+				  background-color: $primaryColor;
+				  border-radius: 3px;
+			}
+	  }
+}
+
+//tabet styles
+@media (orientation: portrait) {
+	  .tempSystem {
+			width: 150px;
+			margin-left: 30px;
+			.temp {
+				  width: 50px;
+				  height: 30px;
+				  font-size: 2rem;
+			}
+	  }
+}
+
+//phone styles
+@media (orientation: portrait) and (max-width: 500px) {
+	  .tempSystem {
+			width: 80px;
+			margin-left: 15px;
+			.temp {
+				  width: 30px;
+				  height: 30px;
+			}
+	  }
+}
+
+/////////////////////////////
+//footer styles
+////////////////////////////
+footer {
+	  background-color: $headerAndFooter;
+	  border-top: 1px solid $secondaryColor;
+	  bottom: 0;
+	  height: 50px;
+	  font-size: 1rem;
+	  line-height: 50px;
+	  position: fixed;
+	  text-align: center;
+	  width: 100%;
+}
+
+//phone styles
+@media (orientation: portrait) and (max-width: 500px){
+	  footer {
+			height: 25px;
+			line-height: 25px;
+	  }
+}
+
+///////////////////////////////
+// Styles for current weather
+//////////////////////////////
+main {
+	  color: black;
+	  height: 30%;
+	  margin: auto;
+	  width: 40%;
+	  //change this font-size to change font-size for current forecast
+	  font-size: 3rem;
+	  .cityName {
+			font-size: 100%;
+			letter-spacing: 0.1rem;
+			text-align: center;
+	  }
+	  .iconAndTemperature {
+			align-items: center;
+			display: flex;
+			font-family: Arial;
+			justify-content: center;
+			margin: 30px 0 30px 0;
+			.weatherPic img {
+				  margin: -60px;
+				  width: 200px;
+			}
+			.currentTemperature {
+				  font-size: 150%;
+				  margin: 0 30px 0 20px;
+			}
+	  }
+	  .currentDescription {
+			font-size: 80%;
+			margin: 30px 0 10px 0;
+			text-align: center;
+	  }
+	  .timeUpdated {
+			font-size: 1rem;
+			font-style: italic;
+			text-align: center;
+			margin-top: 30px;
+	  }
+	  .currentWeatherDetails {
+			display: flex;
+			font-size: 50%;
+			justify-content: space-evenly;
+			margin-top: 30px;
+	  }
+}
+
+//small laptop styles
+@media (max-width: 1600px) and (orientation: landscape){
+	  main {
+			font-size: 4rem;
+			.iconAndTemperature {
+				  margin: 15px 0 0 0;
+				  .weatherPic img {
+						margin: -30px;
+						margin-bottom: -60px;
+						width: 150px;
+				  }
+			}
+			.timeUpdated {
+				  margin-bottom: 20px;
+			}
+	  }
+}
+
+//tablet styles
+@media (orientation: portrait) {
+	  main {
+			width: 80%;
+			font-size: 4rem;
+			.iconAndTemperature .weatherPic img {
+				  margin: -30px;
+				  width: 100px;
+			}
+			.currentDescription {
+				  margin: 10px;
+			}
+			.timeUpdated {
+				  font-size: 1.5rem;
+				  margin-bottom: 0;
+			}
+	  }
+}
+
+
+//phone styles
+@media (orientation: portrait) and (max-width: 500px) {
+	main {
+		  width: 80%;
+		  font-size: 4rem;
+		  .iconAndTemperature .weatherPic img {
+				margin: -30px;
+				width: 100px;
+		  }
+		  .currentDescription {
+				margin: 10px;
+		  }
+		  .timeUpdated {
+				font-size: 1.5rem;
+		  }
+	}
+}
+
+////////////////////////////////////
+//Styles for the Forecasts
+////////////////////////////////////
+.forecastContainer {
+	  width: 100%;
+	  margin: 50px 0 100px 0;
+	  .forecastGroup {
+			display: flex;
+			justify-content: space-evenly;
+			margin: 0 auto 0 auto;
+			width: 80%;
+			.forecastDay {
+				  align-items: center;
+				  border: 1px solid white;
+				  border-radius: 3px;
+				  display: flex;
+				  flex-direction: column;
+				  //change this font-size to change font-size inside forecast day div
+				  font-size: 1rem;
+				  height: 30vh;
+				  justify-content: space-between;
+				  align-content: space-around;
+				  padding: 10px;
+				  width: 15%;
+				  .forecastItem {
+						margin-bottom: 7px;
+				  }
+			}
+	  }
+}
+
+//small laptop style
+@media (max-width: 1600px) {
+	  .forecastContainer {
+			.forecastGroup .forecastDay {
+				  font-size: 1.5rem;
+			}
+	  }
+}
+
+//tablet style
+@media (orientation: portrait)  {
+	  .forecastContainer {
+			margin-top:  10%;
+			.forecastGroup {
+				  flex-wrap: wrap;
+				  height: 45vh;
+				  width: 80%;
+				  .forecastDay {
+						width: 30%;
+						height: 40%;
+						font-size: 2rem;
+						margin: 5px;
+				  }
+			}
+	  }
+}
+
+//phone style
+@media (orientation: portrait) and (max-width: 500px) {
+	  .forecastContainer {
+			height: 70%;
+			margin-top:  10%;
+			.forecastGroup {
+				  flex-wrap: wrap;
+				  height: 100%;
+				  width: 90%;
+				  .forecastDay {
+						width: 35%;
+						height: 40%;
+						font-size: 1.5rem;
+						margin: 5px;
+				  }
+			}
+	  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//Styles for inside each of the 4 .forecastDay divs
+////////////////////////////////////////////////////////////////////////////////
+.forecastDescriptionText {
+	  font-size: 100%;
+	  font-style: italic;
+	  text-align: center;
+}
+
+.forecastIcon img {
+	  height: 100px;
+	  margin: -20px 0 -30px 0;
+}
+
+.forecastTemperature {
+	  display: flex;
+	  font-size: 150%;
+	  justify-content: space-evenly;
+	  width: 80%;
+}
+
+.forecastDetails {
+	  display: flex;
+	  justify-content: space-between;
+	  width: 90%;
+	  img {
+			width: 40px;
+	  }
+	  .wind, .rain {
+			align-items: center;
+			justify-content: space-between;
+			display: flex;
+	  }
+}
+
+//small laptop styles
+@media (max-width: 1050px) {
+	  .forecastIcon img {
+			height: 75px;
+			margin: -15px 0 -22px 0;
+	  }
+	  .forecastDetails img {
+			width: 25px;
+	  }
+}
+
+//table styles
+@media (orientation: portrait) {
+	  .forecastIcon img {
+			height: 50px;
+			margin: -10px 0 -15px 0;
+	  }
+}
+
+
+/////////////////////////////////
+//Forecast Details Styles
+////////////////////////////////
+.forecastDetail {
+	  align-items: center;
+	  display: flex;
+	  flex-wrap: wrap;
+	  //change this font-size to change font-size for forecast details
+	  font-size: 1rem;
+	  height: 100%;
+	  justify-content: center;
+	  align-content: center;
+	  width: 100%;
+	  img {
+			margin: -5px;
+	  }
+	  .forecastDetailQuad {
+			height: 50%;
+			font-size: 1.5rem;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			text-align: center;
+			width: 50%;
+			.forecastDetailTime {
+				  font-size: 80%;
+				  margin-bottom: 10px;
+			}
+			.forecastDetailTemp {
+				  font-size: 100%;
+			}
+	  }
+}
+
+//Red Button styles
+#forecastDay2 {
+	  position: relative;
+}
+
+.redButton {
+	  background-color: red;
+	  border: 1px solid black;
+	  border-radius: 50%;
+	  height: 20px;
+	  left: -10px;
+	  outline: none;
+	  position: absolute;
+	  top: -10px;
+	  width: 20px;
+}
+
+
+
+
+
+

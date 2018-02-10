@@ -1,0 +1,366 @@
+html {
+  font-size: 0.8vmax; }
+
+body {
+  background: #bbd0f7; }
+
+header {
+  background-color: #6494ed;
+  border-bottom: 1px solid #154eb7;
+  height: 50px;
+  margin-bottom: 50px;
+  width: 100%; }
+  header form {
+    float: right;
+    margin-top: 8px; }
+    header form input {
+      color: black;
+      background-color: #bbd0f7;
+      border: 1px solid #154eb7;
+      border-radius: 3px;
+      height: 15px;
+      letter-spacing: 0.2rem;
+      margin: 0 20px 0 20px;
+      padding: 10px;
+      outline: none;
+      width: 200px; }
+      header form input:focus {
+        background-color: #e8effc; }
+
+@media (orientation: portrait) {
+  header {
+    margin-bottom: 40px; }
+    header form input {
+      width: 200px;
+      font-size: 2rem; } }
+
+@media (orientation: portrait) and (max-width: 500px) {
+  header {
+    margin-bottom: 20px; }
+    header form input {
+      width: 100px;
+      font-size: 3rem; } }
+
+.tempSystem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  float: left;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  margin: 10px 0 0 30px;
+  width: 120px; }
+  .tempSystem .selected {
+    background-color: #bbd0f7; }
+  .tempSystem .temp {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 1px solid #154eb7;
+    border-radius: 3px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 1.2rem;
+    height: 26px;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    width: 45px; }
+    .tempSystem .temp:hover {
+      background-color: #bbd0f7;
+      border-radius: 3px; }
+
+@media (orientation: portrait) {
+  .tempSystem {
+    width: 150px;
+    margin-left: 30px; }
+    .tempSystem .temp {
+      width: 50px;
+      height: 30px;
+      font-size: 2rem; } }
+
+@media (orientation: portrait) and (max-width: 500px) {
+  .tempSystem {
+    width: 80px;
+    margin-left: 15px; }
+    .tempSystem .temp {
+      width: 30px;
+      height: 30px; } }
+
+footer {
+  background-color: #6494ed;
+  border-top: 1px solid #154eb7;
+  bottom: 0;
+  height: 50px;
+  font-size: 1rem;
+  line-height: 50px;
+  position: fixed;
+  text-align: center;
+  width: 100%; }
+
+@media (orientation: portrait) and (max-width: 500px) {
+  footer {
+    height: 25px;
+    line-height: 25px; } }
+
+main {
+  color: black;
+  height: 30%;
+  margin: auto;
+  width: 40%;
+  font-size: 3rem; }
+  main .cityName {
+    font-size: 100%;
+    letter-spacing: 0.1rem;
+    text-align: center; }
+  main .iconAndTemperature {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-family: Arial;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin: 30px 0 30px 0; }
+    main .iconAndTemperature .weatherPic img {
+      margin: -60px;
+      width: 200px; }
+    main .iconAndTemperature .currentTemperature {
+      font-size: 150%;
+      margin: 0 30px 0 20px; }
+  main .currentDescription {
+    font-size: 80%;
+    margin: 30px 0 10px 0;
+    text-align: center; }
+  main .timeUpdated {
+    font-size: 1rem;
+    font-style: italic;
+    text-align: center;
+    margin-top: 30px; }
+  main .currentWeatherDetails {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 50%;
+    -webkit-box-pack: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
+    margin-top: 30px; }
+
+@media (max-width: 1600px) and (orientation: landscape) {
+  main {
+    font-size: 4rem; }
+    main .iconAndTemperature {
+      margin: 15px 0 0 0; }
+      main .iconAndTemperature .weatherPic img {
+        margin: -30px;
+        margin-bottom: -60px;
+        width: 150px; }
+    main .timeUpdated {
+      margin-bottom: 20px; } }
+
+@media (orientation: portrait) {
+  main {
+    width: 80%;
+    font-size: 4rem; }
+    main .iconAndTemperature .weatherPic img {
+      margin: -30px;
+      width: 100px; }
+    main .currentDescription {
+      margin: 10px; }
+    main .timeUpdated {
+      font-size: 1.5rem;
+      margin-bottom: 0; } }
+
+@media (orientation: portrait) and (max-width: 500px) {
+  main {
+    width: 80%;
+    font-size: 4rem; }
+    main .iconAndTemperature .weatherPic img {
+      margin: -30px;
+      width: 100px; }
+    main .currentDescription {
+      margin: 10px; }
+    main .timeUpdated {
+      font-size: 1.5rem; } }
+
+.forecastContainer {
+  width: 100%;
+  margin: 50px 0 100px 0; }
+  .forecastContainer .forecastGroup {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
+    margin: 0 auto 0 auto;
+    width: 80%; }
+    .forecastContainer .forecastGroup .forecastDay {
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      border: 1px solid white;
+      border-radius: 3px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      font-size: 1rem;
+      height: 30vh;
+      -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      -ms-flex-line-pack: distribute;
+      align-content: space-around;
+      padding: 10px;
+      width: 15%; }
+      .forecastContainer .forecastGroup .forecastDay .forecastItem {
+        margin-bottom: 7px; }
+
+@media (max-width: 1600px) {
+  .forecastContainer .forecastGroup .forecastDay {
+    font-size: 1.5rem; } }
+
+@media (orientation: portrait) {
+  .forecastContainer {
+    margin-top: 10%; }
+    .forecastContainer .forecastGroup {
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      height: 45vh;
+      width: 80%; }
+      .forecastContainer .forecastGroup .forecastDay {
+        width: 30%;
+        height: 40%;
+        font-size: 2rem;
+        margin: 5px; } }
+
+@media (orientation: portrait) and (max-width: 500px) {
+  .forecastContainer {
+    height: 70%;
+    margin-top: 10%; }
+    .forecastContainer .forecastGroup {
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      height: 100%;
+      width: 90%; }
+      .forecastContainer .forecastGroup .forecastDay {
+        width: 35%;
+        height: 40%;
+        font-size: 1.5rem;
+        margin: 5px; } }
+
+.forecastDescriptionText {
+  font-size: 100%;
+  font-style: italic;
+  text-align: center; }
+
+.forecastIcon img {
+  height: 100px;
+  margin: -20px 0 -30px 0; }
+
+.forecastTemperature {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 150%;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+  width: 80%; }
+
+.forecastDetails {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 90%; }
+  .forecastDetails img {
+    width: 40px; }
+  .forecastDetails .wind, .forecastDetails .rain {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+
+@media (max-width: 1050px) {
+  .forecastIcon img {
+    height: 75px;
+    margin: -15px 0 -22px 0; }
+  .forecastDetails img {
+    width: 25px; } }
+
+@media (orientation: portrait) {
+  .forecastIcon img {
+    height: 50px;
+    margin: -10px 0 -15px 0; } }
+
+.forecastDetail {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  font-size: 1rem;
+  height: 100%;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  width: 100%; }
+  .forecastDetail img {
+    margin: -5px; }
+  .forecastDetail .forecastDetailQuad {
+    height: 50%;
+    font-size: 1.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    width: 50%; }
+    .forecastDetail .forecastDetailQuad .forecastDetailTime {
+      font-size: 80%;
+      margin-bottom: 10px; }
+    .forecastDetail .forecastDetailQuad .forecastDetailTemp {
+      font-size: 100%; }
+
+#forecastDay2 {
+  position: relative; }
+
+.redButton {
+  background-color: red;
+  border: 1px solid black;
+  border-radius: 50%;
+  height: 20px;
+  left: -10px;
+  outline: none;
+  position: absolute;
+  top: -10px;
+  width: 20px; }

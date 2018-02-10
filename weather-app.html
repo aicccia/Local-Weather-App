@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>J. Nicholas Engleman's Weather App</title>
-	<link rel="stylesheet" href="css/cssreset.css">
-	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/weather-app.css">
 	<link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
 </head>
 <body>
@@ -13,7 +14,7 @@
 		<div class="temp selected" id="fahrenheit">F</div>
 		<div class="temp" id="celsius">C</div>
 	</div>
-	<form class="zipcode">
+	<form class="zipcode" id="zipcode">
 		<label>
 			<input type="text" id="zip" maxlength="5" placeholder="zipcode">
 		</label>
@@ -21,83 +22,90 @@
 </header>
 
 <main>
-	<div class="location" id="location"><p>Atlanta, Georgia</p></div>
+	<div class="cityName" id="cityName"><p>Atlanta, Georgia</p></div>
 
-	<div class="row1">
+	<div class="iconAndTemperature">
 		<div class="weatherPic" id="weatherIcon">Sunny</div>
-		<div class="temperature" id="currentTemperature"><p>78 F</p></div>
+		<div class="currentTemperature" id="currentTemperature"><p>78 F</p></div>
 	</div>
-	<div class="description" id="currentDescription"><p>Sunny</p></div>
-	<div class="updated" id="updated">updated as of 3:07 PM</div>
-	<div class="bottomRow">
+	<div class="currentDescription" id="currentDescription"><p>Sunny</p></div>
+	<div class="timeUpdated" id="updated">updated as of 3:07 PM</div>
+	<div class="currentWeatherDetails">
 		<div class="humidity" id="currentHumidity"><p>Humidity</p></div>
 		<div class="wind" id="currentWind"><p>SW 7.67 knots</p></div>
 		<div class="visibility" id="currentVisibility"><p>SW 7.67 knots</p></div>
 	</div>
 </main>
 
+
+
+
 <div class="forecastContainer">
 	<div class="forecastGroup">
 		<div class="forecastDay" id="forecastDay1">
-			<div class="date forecastItem" id="date1"></div>
-			<div class="iconForecast forecastItem" id="iconForecast1"></div>
-			<div class="tempRow">
-				<div class="tempForecast forecastItem" id="minTemp1"></div>
-				<div class="tempForecast forecastItem" id="maxTemp1"></div>
+			<div class="forecastItem forecastDescriptionText " id="date1"></div>
+			<div class="forecastItem forecastIcon" id="iconForecast1"></div>
+			<div class="forecastTemperature">
+				<div class="forecastItem forecastTemperatureText" id="minTemp1"></div>
+				<div class="forecastItem forecastTemperatureText" id="maxTemp1"></div>
 			</div>
-			<div class="descriptionForecast forecastItem" id="description1"></div>
-			<div class="miscWeather forecastItem">
-				<div class="wind" id="windForecast1"></div>
-				<div class="rain" id="rainForecast1"></div>
+			<div class="forecastItem forecastDescriptionText" id="description1"></div>
+			<div class="forecastItem forecastDetails">
+				<div class="wind forecastDescriptionText" id="windForecast1"></div>
+				<div class="rain forecastDescriptionText" id="rainForecast1"></div>
 			</div>
 		</div>
 		<div class="forecastDay" id="forecastDay2">
-			<button class="redButton"></button>
-			<div class="date forecastItem" id="date2"></div>
-			<div class="iconForecast forecastItem" id="iconForecast2"></div>
-			<div class="tempRow">
-				<div class="tempForecast forecastItem" id="minTemp2"></div>
-				<div class="tempForecast forecastItem" id="maxTemp2"></div>
+			<div class="forecastItem forecastDescriptionText " id="date2"></div>
+			<div class="forecastItem forecastIcon" id="iconForecast2"></div>
+			<div class="forecastTemperature">
+				<div class="forecastItem forecastTemperatureText" id="minTemp2"></div>
+				<div class="forecastItem forecastTemperatureText" id="maxTemp2"></div>
 			</div>
-			<div class="descriptionForecast forecastItem" id="description2"></div>
-			<div class="miscWeather forecastItem">
-				<div class="wind" id="windForecast2"></div>
-				<div class="rain" id="rainForecast2"></div>
+			<div class="forecastItem forecastDescriptionText" id="description2"></div>
+			<div class="forecastItem forecastDetails">
+				<div class="wind forecastDescriptionText" id="windForecast2"></div>
+				<div class="rain forecastDescriptionText" id="rainForecast2"></div>
 			</div>
 		</div>
 		<div class="forecastDay" id="forecastDay3">
-			<div class="date forecastItem" id="date3"></div>
-			<div class="iconForecast forecastItem" id="iconForecast3"></div>
-			<div class="tempRow">
-				<div class="tempForecast forecastItem" id="minTemp3"></div>
-				<div class="tempForecast forecastItem" id="maxTemp3"></div>
+			<div class="forecastItem forecastDescriptionText " id="date3"></div>
+			<div class="forecastItem forecastIcon" id="iconForecast3"></div>
+			<div class="forecastTemperature">
+				<div class="forecastItem forecastTemperatureText" id="minTemp3"></div>
+				<div class="forecastItem forecastTemperatureText" id="maxTemp3"></div>
 			</div>
-			<div class="descriptionForecast forecastItem" id="description3"></div>
-			<div class="miscWeather forecastItem">
-				<div class="wind" id="windForecast3"></div>
-				<div class="rain" id="rainForecast3"></div>
+			<div class="forecastItem forecastDescriptionText" id="description3"></div>
+			<div class="forecastItem forecastDetails">
+				<div class="wind forecastDescriptionText" id="windForecast3"></div>
+				<div class="rain forecastDescriptionText" id="rainForecast3"></div>
 			</div>
 		</div>
 		<div class="forecastDay" id="forecastDay4">
-			<div class="date forecastItem" id="date4"></div>
-			<div class="iconForecast forecastItem" id="iconForecast4"></div>
-			<div class="tempRow">
-				<div class="tempForecast forecastItem" id="minTemp4"></div>
-				<div class="tempForecast forecastItem" id="maxTemp4"></div>
+			<div class="forecastItem forecastDescriptionText " id="date4"></div>
+			<div class="forecastItem forecastIcon" id="iconForecast4"></div>
+			<div class="forecastTemperature">
+				<div class="forecastItem forecastTemperatureText" id="minTemp4"></div>
+				<div class="forecastItem forecastTemperatureText" id="maxTemp4"></div>
 			</div>
-			<div class="descriptionForecast forecastItem" id="description4"></div>
-			<div class="miscWeather forecastItem">
-				<div class="wind" id="windForecast4"></div>
-				<div class="rain" id="rainForecast4"></div>
+			<div class="forecastItem forecastDescriptionText" id="description4"></div>
+			<div class="forecastItem forecastDetails">
+				<div class="wind forecastDescriptionText" id="windForecast4"></div>
+				<div class="rain forecastDescriptionText" id="rainForecast4"></div>
 			</div>
 		</div>
+
+
+
+
 	</div>
 </div>
+
 <footer>
 	<p>animated weather icons curtesy of <a href="https://www.amcharts.com/free-animated-svg-weather-icons/">Amcharts</a></p>
 </footer>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="js/weather.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/weather-app.js"></script>
 </body>
 </html>
