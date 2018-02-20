@@ -9,10 +9,10 @@
 $(document).ready(() => {
 	navigator.geolocation.getCurrentPosition(weatherAppController.getCurrentPositionSuccess);
 
+	$("#forecastDay0").on("mouseenter", {value: 0}, weatherAppController.OnMouseEnter);
 	$("#forecastDay1").on("mouseenter", {value: 1}, weatherAppController.OnMouseEnter);
 	$("#forecastDay2").on("mouseenter", {value: 2}, weatherAppController.OnMouseEnter);
 	$("#forecastDay3").on("mouseenter", {value: 3}, weatherAppController.OnMouseEnter);
-	$("#forecastDay4").on("mouseenter", {value: 4}, weatherAppController.OnMouseEnter);
 
 //	weatherAppModel.updateHourlyForecastData();
 
@@ -23,7 +23,7 @@ $(document).ready(() => {
 			weatherAppModel.dailyForecastDOMData.length = 0;
 			weatherAppModel.hourlyForecastDOMData.length = 0;
 
-			weatherAppModel.updateTemperatureData(weatherAppModel.latitude, weatherAppModel.longitude, weatherAppModel.temperatureSystemIsF);
+			weatherAppModel.updateTemperatureData();
 
 			$this.addClass("selected");
 			$("#celsius").removeClass("selected");
@@ -37,7 +37,7 @@ $(document).ready(() => {
 			weatherAppModel.dailyForecastDOMData.length = 0;
 			weatherAppModel.hourlyForecastDOMData.length = 0;
 
-			weatherAppModel.updateTemperatureData(weatherAppModel.latitude, weatherAppModel.longitude, weatherAppModel.temperatureSystemIsF);
+			weatherAppModel.updateTemperatureData();
 
 			$this.addClass("selected");
 			$("#fahrenheit").removeClass("selected");
@@ -73,6 +73,15 @@ const weatherAppModel = {
 	dailyForecastDOMData: [],
 	hourlyForecastDOMData: [],
 	temperatureSystemIsF: true,
+	temperatureData: {
+		currentTemp: 0,
+		day: [
+			{ Hi: 0, Low: 0, "12:00am": 0, "6:00am" : 0, "12:00pm": 0, "6:00pm" : 0 },
+			{ Hi: 0, Low: 0, "12:00am": 0, "6:00am" : 0, "12:00pm": 0, "6:00pm" : 0 },
+			{ Hi: 0, Low: 0, "12:00am": 0, "6:00am" : 0, "12:00pm": 0, "6:00pm" : 0 },
+			{ Hi: 0, Low: 0, "12:00am": 0, "6:00am" : 0, "12:00pm": 0, "6:00pm" : 0 }
+		],
+	},
 	latitude: 0,
 	longitude: 0,
 
@@ -80,9 +89,9 @@ const weatherAppModel = {
 		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=4bd0296ac3468ba55671920cabb0f745`;
 
 		$.getJSON(url, weather => {
+			this.temperatureData.currentTemp = weather.main.temp;
 			const weatherDataObject = {
 				cloudCoverage: weather.clouds.all,
-				temperature: weather.main.temp,
 				description: weather.weather[0].description,
 				time: new Date(Date.now()).toLocaleTimeString(),
 				city: weather.name,
@@ -102,8 +111,15 @@ const weatherAppModel = {
         */
 		const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=4bd0296ac3468ba55671920cabb0f745`;
 		$.getJSON(url, weatherData => {
-			for (let day = 1; day < 5; day++) {
-				weatherAppView.displayDailyForecast(weatherData, day);
+			let delayTime = 0;
+			for (let day = 0; day < 4; day++) {
+				this.temperatureData.day[day].Hi = this.helperFunctions.computeHighTemp(weatherData, day);
+				this.temperatureData.day[day].Low = this.helperFunctions.computeLowTemp(weatherData, day);
+			}
+
+			for (let day = 0; day < 4; day++) {
+				weatherAppView.displayDailyForecast(weatherData, day, delayTime);
+				delayTime = delayTime + 300;
 			}
 		});
 	},
@@ -114,63 +130,62 @@ const weatherAppModel = {
 			}
 		);
 	},
-	updateTemperatureData(lat, lon) {
-		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4bd0296ac3468ba55671920cabb0f745`;
-		$.getJSON(url, weatherCurrent => {
-			weatherAppView.displayCurrentTemperature(weatherCurrent.main.temp)
-		});
-
-		/*OpenWeatherMap 5-day Forecast API
-        the API returns an inconvenient array of fourty 3-hour forecasts. To find weather forecasts for the next four
-        24-hour periods, several functions are used to massage the data before it is displayed.
-        */
-		const urlForecast = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=4bd0296ac3468ba55671920cabb0f745`;
-		//the OpenWeatherMap API gives
-		$.getJSON(urlForecast, weatherForecast => {
-			for (let day = 1; day < 5; day++) {
-				weatherAppView.displayForecastTemperatures(weatherForecast, day);
-			}
-		});
-	},
 	findDesiredHourlyForecasts(weatherData) {
-		for (let forecastBlock = 0, day = 1; forecastBlock < weatherData.list.length && day < 5; forecastBlock++) {
+		for (let forecastBlock = 0, day = 0; forecastBlock < weatherData.list.length && day < 4; forecastBlock++) {
 			if (weatherData.list[forecastBlock].dt_txt.includes("06:00:00")) {
+				this.temperatureData.day[day]["12:00am"] = this.convertTemperature(weatherData.list[forecastBlock].main.temp,true);
 				weatherAppView.displayHourlyForecast(weatherData.list[forecastBlock], "12:00am", day, 1, true);
 				day++;
 			}
 		}
 		//to display the 6am data for the next 4 days
-		for (let forecastBlock = 0, day = 1; forecastBlock < weatherData.list.length && day < 5; forecastBlock++) {
+		for (let forecastBlock = 0, day = 0; forecastBlock < weatherData.list.length && day < 4; forecastBlock++) {
 			if (weatherData.list[forecastBlock].dt_txt.includes("12:00:00")) {
+				this.temperatureData.day[day]["6:00am"] = this.convertTemperature(weatherData.list[forecastBlock].main.temp, true);
 				weatherAppView.displayHourlyForecast(weatherData.list[forecastBlock], "6:00am", day, 2, true);
 				day++;
 			}
 		}
 		//to display the noon data for the next 4 days
-		for (let forecastBlock = 0, day = 1; forecastBlock < weatherData.list.length && day < 5; forecastBlock++) {
+		for (let forecastBlock = 0, day = 0; forecastBlock < weatherData.list.length && day < 4; forecastBlock++) {
 			if (weatherData.list[forecastBlock].dt_txt.includes("18:00:00")) {
-				weatherAppView.displayHourlyForecast(weatherData.list[forecastBlock], "6:00pm", day, 3, true);
+				this.temperatureData.day[day]["12:00pm"] = this.convertTemperature(weatherData.list[forecastBlock].main.temp, true);
+				weatherAppView.displayHourlyForecast(weatherData.list[forecastBlock], "12:00pm", day, 3, true);
 				day++;
 			}
 		}
 		//to display the 6pm data for the next 4 nights
-		for (let forecastBlock = 0, day = 1; forecastBlock < weatherData.list.length && day < 5; forecastBlock++) {
+		for (let forecastBlock = 0, day = 0; forecastBlock < weatherData.list.length && day < 4; forecastBlock++) {
 			if (weatherData.list[forecastBlock].dt_txt.includes("00:00:00")) {
-				weatherAppView.displayHourlyForecast(weatherData.list[forecastBlock], "12:00am", day, 4, false);
+				this.temperatureData.day[day]["6:00pm"] = this.convertTemperature(weatherData.list[forecastBlock].main.temp, true);
+				weatherAppView.displayHourlyForecast(weatherData.list[forecastBlock], "6:00pm", day, 4, false);
 				day++;
 			}
 		}
 	},
-	convertTemperature(temp) {
-		if (weatherAppModel.temperatureSystemIsF) {
-			return Math.round(Math.floor(temp) * (9 / 5) - 459.67);
+	updateTemperatureData() {
+		this.temperatureData.currentTemp =  this.convertTemperature(this.temperatureData.currentTemp, false);
+		weatherAppView.displayConvertedTemperatures();
+	},
+	convertTemperature(temp, fromKelvin) {
+		if(fromKelvin) {
+			if (weatherAppModel.temperatureSystemIsF) {
+				return Math.round(Math.floor(temp) * (9 / 5) - 459.67);
+			} else {
+				return Math.round(Math.floor(temp) - 273.15);
+			}
+		} else {
+			if (weatherAppModel.temperatureSystemIsF) {
+				return Math.round((temp - 32) * (5/9));
+			} else {
+				return Math.round((temp * (9 / 5)) + 32);
+			}
 		}
-		return Math.round(Math.floor(temp) - 273.15);
 	},
 	helperFunctions: {
 		computeHighTemp(weatherData, day) {
 			let maxTemp = 0;
-			const startDay = (day - 1) * 8;
+			const startDay = day  * 8;
 			for (let e = startDay; e < startDay + 8; e++) {
 				if (maxTemp < weatherData.list[e].main.temp_max) {
 					maxTemp = weatherData.list[e].main.temp_max;
@@ -179,11 +194,11 @@ const weatherAppModel = {
 			if (this.temperatureSystemIsF) {
 				return `${Math.round(maxTemp * (9 / 5) - 459.67)}&#176`;
 			}
-			return `${Math.round(maxTemp - 273.15)}&#176`;
+			return Math.round(maxTemp - 273.15);
 		},
 		computeLowTemp(weatherData, day) {
 			let minTemp = 1000;
-			const startDay = (day - 1) * 8;
+			const startDay = day * 8;
 			for (let e = startDay; e < startDay + 8; e++) {
 				if (minTemp > weatherData.list[e].main.temp_min) {
 					minTemp = weatherData.list[e].main.temp_min;
@@ -192,11 +207,11 @@ const weatherAppModel = {
 			if (this.temperatureSystemIsF) {
 				return `${Math.round(minTemp * (9 / 5) - 459.67)}&#176`;
 			}
-			return `${Math.round(minTemp - 273.15)}&#176`;
+			return Math.round(minTemp - 273.15);
 		},
 		computeAverageCloudCoverage(weatherData, day) {
 			let totalCloudCoverage = 0;
-			const startDay = (day - 1) * 8;
+			const startDay = day * 8;
 			for (let e = startDay; e < startDay + 8; e++) {
 				totalCloudCoverage += weatherData.list[e].clouds.all;
 			}
@@ -204,7 +219,7 @@ const weatherAppModel = {
 		},
 		computeAverageWindSpeed(weatherData, day) {
 			let averageWindSpeed = 0;
-			const startDay = (day - 1) * 8;
+			const startDay = day * 8;
 			for (let e = startDay; e < startDay + 8; e++) {
 				averageWindSpeed += weatherData.list[e].wind.speed;
 			}
@@ -241,7 +256,7 @@ const weatherAppModel = {
 		},
 		computeAverageRain(weatherData, day) {
 			let averageRain = 0;
-			const startDay = (day - 1) * 8;
+			const startDay = day * 8;
 			for (let e = startDay; e < startDay + 8; e++) {
 				if (weatherData.list[e].rain) {
 					averageRain++;
@@ -292,7 +307,7 @@ const weatherAppView = {
 	displayCurrentWeather(weatherDataObject) {
 		$("#currentTemperature")
 			.empty()
-			.append(`<p> ${weatherAppModel.convertTemperature(weatherDataObject.temperature, weatherAppModel.temperatureSystemIsF)}&#176</p>`);
+			.append(`<p> ${weatherAppModel.convertTemperature(weatherAppModel.temperatureData.currentTemp, true)}&#176</p>`);
 		$("#currentDescription")
 			.empty()
 			.append(`<p>"${weatherDataObject.description}"</p>`);
@@ -325,8 +340,7 @@ const weatherAppView = {
 			.append(`<p>Visibility is ${weatherDataObject.visibility} miles.</p>`)
 			.animate({opacity: 1}, 1000);
 	},
-	displayDailyForecast(weatherData, day) {
-		let delayTime = 0;
+	displayDailyForecast(weatherData, day, delayTime) {
 		const animationDelay = 700;
 		$(`#date${day}`)
 			.css("opacity", 0)
@@ -343,13 +357,13 @@ const weatherAppView = {
 		$(`#maxTemp${day}`)
 			.css("opacity", 0)
 			.empty()
-			.append(`<p>${weatherAppModel.helperFunctions.computeHighTemp(weatherData, day)}</p>`)
+			.append(`<p>${weatherAppModel.temperatureData.day[day].Hi}&#176</p>`)
 			.delay(delayTime)
 			.animate({opacity: 1}, animationDelay);
 		$(`#minTemp${day}`)
 			.css("opacity", 0)
 			.empty()
-			.append(`<p>${weatherAppModel.helperFunctions.computeLowTemp(weatherData, day)}</p>`)
+			.append(`<p>${weatherAppModel.temperatureData.day[day].Low}&#176</p>`)
 			.delay(delayTime)
 			.animate({opacity: 1}, animationDelay);
 		$(`#description${day}`)
@@ -370,7 +384,6 @@ const weatherAppView = {
 			.append(`<img src="icons/wi-raindrops.svg"><p>${weatherAppModel.helperFunctions.computeAverageRain(weatherData, day)}%</p>`)
 			.delay(delayTime)
 			.animate({opacity: 1}, animationDelay);
-		delayTime = delayTime + 200;
 	},
 	displayHourlyForecast(weatherData, timeString, day, forecast, showDayIconOnly) {
 		$(`#forecastDetailTime${day}${forecast}`)
@@ -382,20 +395,18 @@ const weatherAppView = {
 			);
 		$(`#forecastDetailTemp${day}${forecast}`)
 			.empty()
-			.append(`<p>${weatherAppModel.convertTemperature(weatherData.main.temp)}&#176</p>`);
+			.append(`<p>${weatherAppModel.temperatureData.day[day][timeString]}&#176</p>`);
 	},
-	displayCurrentTemperature(temperature) {
+	displayConvertedTemperatures() {
 		$("#currentTemperature")
 			.css("opacity", 0)
 			.empty()
-			.append(`<p> ${weatherAppModel.convertTemperature(temperature, weatherAppModel.temperatureSystemIsF)}&#176</p>`)
+			.append(`<p> ${weatherAppModel.temperatureData.currentTemp}&#176</p>`)
 			.animate({opacity: 1}, 2000);
-	},
-	displayForecastTemperatures(weatherForecast, day) {
-		$(`#maxTemp${day}`).css("opacity", 0).empty().append(`<p>${weatherAppModel.helperFunctions.computeHighTemp(weatherForecast, day, weatherAppModel.temperatureSystemIsF)}</p>`)
-			.animate({opacity: 1}, 2000);
-		$(`#minTemp${day}`).css("opacity", 0).empty().append(`<p>${weatherAppModel.helperFunctions.computeLowTemp(weatherForecast, day, weatherAppModel.temperatureSystemIsF)}</p>`)
-			.animate({opacity: 1}, 2000);
+		// $(`#maxTemp${day}`).css("opacity", 0).empty().append(`<p>${weatherAppModel.helperFunctions.computeHighTemp(weatherForecast, day, weatherAppModel.temperatureSystemIsF)}</p>`)
+		// 	.animate({opacity: 1}, 2000);
+		// $(`#minTemp${day}`).css("opacity", 0).empty().append(`<p>${weatherAppModel.helperFunctions.computeLowTemp(weatherForecast, day, weatherAppModel.temperatureSystemIsF)}</p>`)
+		// 	.animate({opacity: 1}, 2000);
 	},
 	helperFunctions: {
 		updateForecastDates(increment) {
@@ -568,7 +579,7 @@ const weatherAppController = {
 		$(".redButton").hide();
 		$forecastDay.off("mouseenter");
 
-		if (!weatherAppModel.dailyForecastDOMData[event.data.value] && $(`#rainForecast4`).text() !== "") {
+		if (!weatherAppModel.dailyForecastDOMData[event.data.value] && $(`#rainForecast3`).text() !== "") {
 			weatherAppView.helperFunctions.stopAnimation(event.data.value, function () {
 				weatherAppModel.dailyForecastDOMData[event.data.value] = $forecastDay.html();
 			});
