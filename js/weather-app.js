@@ -126,19 +126,6 @@ const weatherAppModel = {
 				delayTime = delayTime + 300;
 			}
 		});
-
-		//sets event handlers approximately when last animation inside above for-loop has finished
-		// setTimeout(function() {
-		// 	$("#forecastDay0").on("mouseenter", {value: 0}, weatherAppController.OnMouseEnter);
-		// 	$("#forecastDay1").on("mouseenter", {value: 1}, weatherAppController.OnMouseEnter);
-		// 	$("#forecastDay2").on("mouseenter", {value: 2}, weatherAppController.OnMouseEnter);
-		// 	$("#forecastDay3").on("mouseenter", {value: 3}, weatherAppController.OnMouseEnter);
-		// }, 1900);
-
-		$("#forecastDay0").on("mouseenter", {value: 0}, weatherAppController.OnMouseEnter);
-		$("#forecastDay1").on("mouseenter", {value: 1}, weatherAppController.OnMouseEnter);
-		$("#forecastDay2").on("mouseenter", {value: 2}, weatherAppController.OnMouseEnter);
-		$("#forecastDay3").on("mouseenter", {value: 3}, weatherAppController.OnMouseEnter);
 	},
 	updateHourlyForecastData() {
 		const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${weatherAppModel.latitude}&lon=${weatherAppModel.longitude}&appid=4bd0296ac3468ba55671920cabb0f745`;
@@ -151,6 +138,7 @@ const weatherAppModel = {
 		for (let forecastBlock = 0, day = 0; forecastBlock < weatherData.list.length && day < 4; forecastBlock++) {
 			if (weatherData.list[forecastBlock].dt_txt.includes("06:00:00")) {
 				this.temperatureData.day[day]["12:00am"] = this.convertTemperature(weatherData.list[forecastBlock].main.temp, true);
+			//	this.temperatureData.day[day]getHourlyForecastIcon(weatherData.list[forecastBlock][0].id, true);
 				weatherAppView.displayHourlyForecast(weatherData.list[forecastBlock], "12:00am", day, 1, true);
 				day++;
 			}
@@ -281,7 +269,7 @@ const weatherAppModel = {
 			let averageRain = 0;
 			const startDay = day * 8;
 			for (let e = startDay; e < startDay + 8; e++) {
-				if (weatherData.list[e].rain['3h']) {
+				if ((weatherData.list[e].rain) && (weatherData.list[e].rain['3h'])) {
 					averageRain++;
 				}
 			}
@@ -404,7 +392,11 @@ const weatherAppView = {
 			.empty()
 			.append(`<img src="icons/wi-raindrops.svg"><p>${weatherAppModel.helperFunctions.computeAverageRain(weatherData, day)}%</p>`)
 			.delay(delayTime)
-			.animate({opacity: 1}, animationDelay);
+			.animate({opacity: 1}, animationDelay, function(){
+				$(`#forecastDay${day}`).on("mouseenter", {value:`${day}`}, weatherAppController.OnMouseEnter);
+			});
+
+
 	},
 	displayHourlyForecast(weatherData, timeString, day, forecast, showDayIconOnly) {
 		$(`#forecastDetailTime${day}${forecast}`)
@@ -635,13 +627,12 @@ const weatherAppController = {
 		weatherAppModel.longitude = position.coords.longitude;
 
 		weatherAppModel.updateCurrentWeatherData(weatherAppModel.latitude, weatherAppModel.longitude);
-		weatherAppModel.updateDailyForecastData(weatherAppModel.latitude, weatherAppModel.longitude, function() {
-
-		});
+		weatherAppModel.updateDailyForecastData(weatherAppModel.latitude, weatherAppModel.longitude);
 	},
+
 	OnMouseEnter(event) {
 		const $forecastDay = $(`#forecastDay${event.data.value}`);
-		$(".redButton").hide();
+		$("#redButton").hide();
 		$forecastDay.off("mouseenter");
 
 		if (!weatherAppModel.dailyForecastDOMData[event.data.value]) {
