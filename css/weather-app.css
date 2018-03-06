@@ -27,23 +27,6 @@ header {
       header form input:focus {
         background-color: #e8effc; }
 
-@media (orientation: portrait) {
-  header {
-    margin-bottom: 40px; }
-    header form {
-      margin-right: 50px; }
-      header form input {
-        font-size: 2rem; } }
-
-@media (orientation: portrait) and (max-width: 500px) {
-  header {
-    margin-bottom: 20px; }
-    header form {
-      margin-right: 10px; }
-      header form input {
-        font-size: 3rem;
-        width: 100px; } }
-
 .tempSystem {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -76,38 +59,6 @@ header {
     .tempSystem .temp:hover {
       background-color: #bbd0f7;
       border-radius: 3px; }
-
-@media (orientation: portrait) {
-  .tempSystem {
-    margin-left: 50px;
-    width: 118px; }
-    .tempSystem .temp {
-      font-size: 2rem;
-      height: 30px;
-      width: 50px; } }
-
-@media (orientation: portrait) and (max-width: 500px) {
-  .tempSystem {
-    width: 114px;
-    margin-left: 10px; }
-    .tempSystem .temp {
-      font-size: 3rem; } }
-
-footer {
-  background-color: #6494ed;
-  border-top: 1px solid #154eb7;
-  bottom: 0;
-  height: 50px;
-  font-size: 1rem;
-  line-height: 50px;
-  position: fixed;
-  text-align: center;
-  width: 100%; }
-
-@media (orientation: portrait) and (max-width: 500px) {
-  footer {
-    height: 25px;
-    line-height: 25px; } }
 
 main {
   color: black;
@@ -154,48 +105,8 @@ main {
     -webkit-box-pack: space-evenly;
     -ms-flex-pack: space-evenly;
     justify-content: space-evenly;
-    margin-top: 30px; }
-
-@media (max-width: 1600px) and (orientation: landscape) {
-  main {
-    font-size: 4rem; }
-    main .iconAndTemperature {
-      margin: 15px 0 0 0; }
-      main .iconAndTemperature .weatherPic img {
-        margin: -30px;
-        margin-bottom: -60px;
-        width: 150px; }
-    main .timeUpdated {
-      margin-bottom: 20px; } }
-
-@media (orientation: portrait) {
-  main {
-    width: 80%;
-    font-size: 5rem; }
-    main .iconAndTemperature .weatherPic img {
-      margin: -30px;
-      width: 100px; }
-    main .currentDescription {
-      margin: 10px; }
-    main .timeUpdated {
-      font-size: 1.5rem; } }
-
-@media (orientation: portrait) and (max-width: 500px) {
-  main {
-    width: 90%;
-    font-size: 5rem; }
-    main .iconAndTemperature {
-      margin-bottom: 15px; }
-      main .iconAndTemperature .weatherPic img {
-        margin: -30px;
-        width: 100px; }
-    main .currentDescription {
-      margin: 0; }
-    main .timeUpdated {
-      font-size: 1.5rem;
-      margin-top: 10px; }
-    main .currentWeatherDetails {
-      margin-top: 15px; } }
+    margin-top: 30px;
+    text-align: center; }
 
 .forecastContainer {
   width: 100%;
@@ -233,34 +144,6 @@ main {
       width: 20%; }
       .forecastContainer .forecastGroup .forecastDay .forecastItem {
         margin-bottom: 7px; }
-
-@media (max-width: 1600px) {
-  .forecastContainer .forecastGroup .forecastDay {
-    font-size: 1.5rem; } }
-
-@media (orientation: portrait) {
-  .forecastContainer {
-    margin-top: 5%; }
-    .forecastContainer .forecastGroup {
-      -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-      -webkit-box-pack: center;
-      -ms-flex-pack: center;
-      justify-content: center;
-      height: 45vh;
-      width: 90%; }
-      .forecastContainer .forecastGroup .forecastDay {
-        width: 30%;
-        height: 40%;
-        font-size: 2rem;
-        margin: 20px; } }
-
-@media (orientation: portrait) and (max-width: 500px) {
-  .forecastContainer .forecastGroup .forecastDay {
-    font-size: 1.5rem;
-    margin: 10px;
-    padding: 5px;
-    width: 35%; } }
 
 .forecastDay h2 {
   text-decoration: underline; }
@@ -305,18 +188,6 @@ main {
     display: -ms-flexbox;
     display: flex; }
 
-@media (max-width: 1050px) {
-  .forecastIcon img {
-    height: 75px;
-    margin: -15px 0 -22px 0; }
-  .forecastWindRain img {
-    width: 25px; } }
-
-@media (orientation: portrait) {
-  .forecastIcon img {
-    height: 50px;
-    margin: -10px 0 -15px 0; } }
-
 .forecastDetail {
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -357,10 +228,6 @@ main {
     .forecastDetail .forecastDetailQuad .forecastDetailTemp {
       font-size: 100%; }
 
-@media (orientation: portrait) and (max-width: 500px) {
-  .forecastDetail img {
-    width: 75%; } }
-
 #forecastDay2 {
   position: relative; }
 
@@ -374,3 +241,157 @@ main {
   position: absolute;
   top: -10px;
   width: 20px; }
+
+footer {
+  background-color: #6494ed;
+  border-top: 1px solid #154eb7;
+  bottom: 0;
+  height: 50px;
+  font-size: 1rem;
+  line-height: 50px;
+  position: fixed;
+  text-align: center;
+  width: 100%; }
+
+@media (orientation: landscape) and (max-width: 1600px) {
+  main {
+    font-size: 4rem; }
+    main .iconAndTemperature {
+      margin: 15px 0 0 0; }
+      main .iconAndTemperature .weatherPic img {
+        margin: -30px;
+        margin-bottom: -60px;
+        width: 150px; }
+    main .timeUpdated {
+      margin-bottom: 20px; }
+  .forecastContainer .forecastGroup .forecastDay {
+    font-size: 1.5rem; } }
+
+@media (orientation: landscape) and (max-width: 900px) {
+  header {
+    margin-bottom: 20px; }
+  .tempSystem .temp {
+    font-size: 2rem; }
+  main {
+    height: 30%;
+    width: 70%;
+    font-size: 3rem; }
+    main .cityName {
+      font-size: 100%;
+      letter-spacing: 0.1rem; }
+    main .iconAndTemperature {
+      margin: 30px 0 30px 0; }
+      main .iconAndTemperature .weatherPic img {
+        width: 130px; }
+      main .iconAndTemperature .currentTemperature {
+        font-size: 150%;
+        margin: 0 30px 0 20px; }
+    main .currentDescription {
+      font-size: 80%;
+      margin: 20px 0 10px 0; }
+    main .timeUpdated {
+      font-size: 30%;
+      margin-top: 10px; }
+    main .currentWeatherDetails {
+      font-size: 65%; }
+  .forecastContainer {
+    margin-top: 40px; }
+    .forecastContainer .forecastGroup {
+      width: 80%; }
+      .forecastContainer .forecastGroup .forecastDay {
+        height: 40vh;
+        width: 18%; }
+        .forecastContainer .forecastGroup .forecastDay .forecastItem {
+          margin-bottom: 7px; }
+  .forecastIcon img {
+    height: 60px;
+    margin: -15px 0 -22px 0; }
+  .forecastWindRain img {
+    width: 10px; }
+  .forecastDetail img {
+    margin: -10px; }
+  footer {
+    height: 25px;
+    line-height: 25px; } }
+
+@media (orientation: portrait) {
+  header {
+    margin-bottom: 40px; }
+    header form {
+      margin-right: 50px; }
+      header form input {
+        font-size: 2rem; }
+  .forecastIcon img {
+    height: 50px;
+    margin: -10px 0 -15px 0; }
+  .tempSystem {
+    margin-left: 50px;
+    width: 118px; }
+    .tempSystem .temp {
+      font-size: 2rem;
+      height: 30px;
+      width: 50px; }
+  main {
+    width: 80%;
+    font-size: 5rem; }
+    main .iconAndTemperature .weatherPic img {
+      margin: -30px;
+      width: 100px; }
+    main .currentDescription {
+      margin: 10px; }
+    main .timeUpdated {
+      font-size: 1.5rem; }
+  .forecastContainer {
+    margin-top: 5%; }
+    .forecastContainer .forecastGroup {
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      height: 45vh;
+      width: 90%; }
+      .forecastContainer .forecastGroup .forecastDay {
+        width: 30%;
+        height: 40%;
+        font-size: 2rem;
+        margin: 20px; } }
+
+@media (orientation: portrait) and (max-width: 500px) {
+  header {
+    margin-bottom: 20px; }
+    header form {
+      margin-right: 10px; }
+      header form input {
+        font-size: 3rem;
+        width: 100px; }
+  .tempSystem {
+    width: 114px;
+    margin-left: 10px; }
+    .tempSystem .temp {
+      font-size: 3rem; }
+  main {
+    width: 90%;
+    font-size: 5rem; }
+    main .iconAndTemperature {
+      margin-bottom: 15px; }
+      main .iconAndTemperature .weatherPic img {
+        margin: -30px;
+        width: 100px; }
+    main .currentDescription {
+      margin: 0; }
+    main .timeUpdated {
+      font-size: 1.5rem;
+      margin-top: 10px; }
+    main .currentWeatherDetails {
+      margin-top: 15px; }
+  .forecastContainer .forecastGroup .forecastDay {
+    font-size: 1.5rem;
+    margin: 10px;
+    padding: 5px;
+    width: 35%; }
+  .forecastDetail img {
+    width: 75%; }
+  footer {
+    height: 25px;
+    line-height: 25px; } }
