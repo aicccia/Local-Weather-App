@@ -422,7 +422,7 @@ footer {
 			width: 90%;
 			font-size: 5rem;
 			.iconAndTemperature {
-				  margin-bottom: 15px;
+				  margin: 15px 0;
 				  .weatherPic img {
 						margin: -30px;
 						width: 100px;
@@ -444,7 +444,12 @@ footer {
 			margin: 10px;
 			padding: 5px;
 			width: 35%;
-
+			.forecastDescriptionText {
+				  margin: 5px 0 -5px 0;
+			}
+			.wind img, .rain img {
+				  width: 60%;
+			}
 	  }
 	  .forecastDetail img {
 			width: 75%;

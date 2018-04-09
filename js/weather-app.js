@@ -234,10 +234,7 @@ const weatherAppModel = {
 			for (let e = startDay; e < startDay + 8; e++) {
 				averageWindSpeed += weatherData.list[e].wind.speed;
 			}
-			if (weatherAppModel.temperatureSystemIsF) {
-				averageWindSpeed = Math.round((averageWindSpeed / 8) * 3.28 * 3600 / 5280);
-			}
-			return averageWindSpeed;
+			return 	Math.round((averageWindSpeed / 8) * 3.28 * 3600 / 5280);
 		},
 		computeWindDirection(degrees) {
 			if (degrees < 23 || degrees >= 338) {
